@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Health_MediCare_Application</string>
+    <string name="title_activity_login_user">LoginUser</string>
+</resources>
