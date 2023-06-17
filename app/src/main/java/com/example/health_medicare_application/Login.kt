@@ -1,7 +1,11 @@
 package com.example.health_medicare_application
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,16 +52,16 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginPage(context: Context, navController: NavController)
+fun LoginPage(context: Context, navController: NavController,databaseHelper: UserDatabaseHelper)
 {
     Scaffold(
         topBar = { TopBar("LOGIN") },
-        content = {pad -> LoginFill(pad,context,navController) },
+        content = {pad -> LoginFill(pad,context,navController,databaseHelper) },
     )
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginFill(h: PaddingValues,context: Context, navController: NavController) {
+fun LoginFill(h: PaddingValues,context: Context, navController: NavController,databaseHelper: UserDatabaseHelper) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -127,11 +131,24 @@ fun LoginFill(h: PaddingValues,context: Context, navController: NavController) {
         )
         Button(
             onClick = {
-                navController.navigate("dashboard");
-                Toast.makeText(
-                    context, "Log In Successful ",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (logemail.value.text.isNotEmpty() && logpw.value.text.isNotEmpty()) {
+                    val user = databaseHelper.getUserByUseremail(logemail.value.text)
+                    if (user != null && user.password == logpw.value.text) {
+                        navController.navigate("dashboard/${logemail.value.text}");
+                        Toast.makeText(
+                            context, "Log In Successful ",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        context, "Invalid User Credentials ",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+
+
             },
             modifier=Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),

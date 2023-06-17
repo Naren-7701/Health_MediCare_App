@@ -6,7 +6,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import androidx.room.ColumnInfo
 
 class UserDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -17,21 +16,30 @@ class UserDatabaseHelper(context: Context) :
 
         private const val TABLE_NAME = "user_table"
         private const val COLUMN_ID = "id"
-        private const val COLUMN_FIRST_NAME = "first_name"
-        private const val COLUMN_LAST_NAME = "last_name"
         private const val COLUMN_EMAIL = "email"
+        private const val COLUMN_MOBILE = "mobile"
         private const val COLUMN_PASSWORD = "password"
+        private const val COLUMN_NAME = "name"
+        private const val COLUMN_BMI = "bmi"
+        private const val COLUMN_AGE = "age"
+        private const val COLUMN_GENDER = "gender"
+        private const val COLUMN_BLOODGRP = "bloodgrp"
+        private const val COLUMN_BLOODPRES = "bloodpres"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTable = "CREATE TABLE $TABLE_NAME (" +
                 "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$COLUMN_FIRST_NAME TEXT, " +
-                "$COLUMN_LAST_NAME TEXT, " +
                 "$COLUMN_EMAIL TEXT, " +
-                "$COLUMN_PASSWORD TEXT" +
+                "$COLUMN_MOBILE TEXT, " +
+                "$COLUMN_PASSWORD TEXT, " +
+                "$COLUMN_NAME TEXT, " +
+                "$COLUMN_BMI FLOAT, " +
+                "$COLUMN_AGE TEXT, " +
+                "$COLUMN_GENDER TEXT, " +
+                "$COLUMN_BLOODGRP TEXT, " +
+                "$COLUMN_BLOODPRES TEXT " +
                 ")"
-
         db?.execSQL(createTable)
     }
 
@@ -43,44 +51,37 @@ class UserDatabaseHelper(context: Context) :
     fun insertUser(user: UserDetailDb) {
         val db = writableDatabase
         val values = ContentValues()
-        values.put(COLUMN_FIRST_NAME, user.firstName)
-        values.put(COLUMN_LAST_NAME, user.lastName)
         values.put(COLUMN_EMAIL, user.email)
+        values.put(COLUMN_MOBILE, user.mobile)
         values.put(COLUMN_PASSWORD, user.password)
+        values.put(COLUMN_NAME, user.name)
+        values.put(COLUMN_BMI, user.bmi)
+        values.put(COLUMN_AGE, user.age)
+        values.put(COLUMN_GENDER, user.gender)
+        values.put(COLUMN_BLOODGRP, user.bloodgrp)
+        values.put(COLUMN_BLOODPRES, user.bloodpres)
         db.insert(TABLE_NAME, null, values)
         db.close()
     }
 
     @SuppressLint("Range")
-    fun getUserByUsername(username: String): UserDetailDb? {
+    fun getUserByUseremail(email: String): UserDetailDb? {
         val db = readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_FIRST_NAME = ?", arrayOf(username))
+        val cursor: Cursor =
+            db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_EMAIL = ?", arrayOf(email))
         var user: UserDetailDb? = null
         if (cursor.moveToFirst()) {
             user = UserDetailDb(
                 id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
-                firstName = cursor.getString(cursor.getColumnIndex(COLUMN_FIRST_NAME)),
-                lastName = cursor.getString(cursor.getColumnIndex(COLUMN_LAST_NAME)),
                 email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL)),
+                mobile = cursor.getString(cursor.getColumnIndex(COLUMN_MOBILE)),
                 password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD)),
-            )
-        }
-        cursor.close()
-        db.close()
-        return user
-    }
-    @SuppressLint("Range")
-    fun getUserById(id: Int): UserDetailDb? {
-        val db = readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = ?", arrayOf(id.toString()))
-        var user: UserDetailDb? = null
-        if (cursor.moveToFirst()) {
-            user = UserDetailDb(
-                id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
-                firstName = cursor.getString(cursor.getColumnIndex(COLUMN_FIRST_NAME)),
-                lastName = cursor.getString(cursor.getColumnIndex(COLUMN_LAST_NAME)),
-                email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL)),
-                password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD)),
+                name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
+                bmi = cursor.getFloat(cursor.getColumnIndex(COLUMN_BMI)),
+                age = cursor.getString(cursor.getColumnIndex(COLUMN_AGE)),
+                gender = cursor.getString(cursor.getColumnIndex(COLUMN_GENDER)),
+                bloodgrp = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODGRP)),
+                bloodpres = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODPRES)),
             )
         }
         cursor.close()
@@ -101,18 +102,11 @@ class UserDatabaseHelper(context: Context) :
                     mobile = cursor.getString(cursor.getColumnIndex(COLUMN_MOBILE)),
                     password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD)),
                     name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
-
-
-                    @ColumnInfo(name = "") val email: String?,
-                    @ColumnInfo(name = "mobile") val : String?,
-                    @ColumnInfo(name = "password") val password: String?,
-                    @ColumnInfo(name = "name") val name: String?,
-                    @ColumnInfo(name = "bmi") val bmi:Float?,
-                    @ColumnInfo(name = "age") val age: String?,
-                    @ColumnInfo(name = "gender") val gender: String?,
-                    @ColumnInfo(name = "bloodgrp") val bloodgrp: String?,
-                    @ColumnInfo(name = "bloodpres") val bloodpres: String?,
-
+                    bmi = cursor.getFloat(cursor.getColumnIndex(COLUMN_BMI)),
+                    age = cursor.getString(cursor.getColumnIndex(COLUMN_AGE)),
+                    gender = cursor.getString(cursor.getColumnIndex(COLUMN_GENDER)),
+                    bloodgrp = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODGRP)),
+                    bloodpres = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODPRES)),
                 )
                 users.add(user)
             } while (cursor.moveToNext())
@@ -121,5 +115,4 @@ class UserDatabaseHelper(context: Context) :
         db.close()
         return users
     }
-
 }

@@ -40,19 +40,20 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.database.DatabaseReference
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ForgotPasswordPage(context: Context, navController: NavController)
+fun ForgotPasswordPage(context: Context, navController: NavController,databaseReference: DatabaseReference,databaseHelper: UserDatabaseHelper)
 {
     Scaffold(
         topBar = { TopBar("FORGOT PASSWORD") },
-        content = {pad -> ForgotPassword(pad,context,navController) },
+        content = {pad -> ForgotPassword(pad,context,navController,databaseReference,databaseHelper) },
     )
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ForgotPassword(h: PaddingValues,context: Context,navController: NavController) {
+fun ForgotPassword(h: PaddingValues, context: Context, navController: NavController, databaseReference: DatabaseReference, databaseHelper: UserDatabaseHelper) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

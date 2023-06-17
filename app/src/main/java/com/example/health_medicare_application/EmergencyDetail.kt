@@ -38,7 +38,7 @@ import androidx.navigation.NavController
 fun EmergencyContactPage(navController: NavController)
 {
     Scaffold(
-        topBar = { TopApplicationBar("EMERGENCY DIAL","dashboard",navController) },
+        topBar = { TopApplicationBar("EMERGENCY DIAL","dashboard/{email}",navController) },
         content = {pad -> ListView(pad) },
         bottomBar = { BottomBar(navController)}
     )

@@ -48,12 +48,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.health_medicare_application.ui.theme.Health_MediCare_ApplicationTheme
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
+    private lateinit var databaseHelper: UserDatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        databaseHelper = UserDatabaseHelper(this)
         setContent {
             Health_MediCare_ApplicationTheme {
                 // A surface container using the 'background' color from the theme
@@ -75,39 +75,35 @@ class MainActivity : ComponentActivity() {
                     SideEffect {
                         get_permission.launch(Manifest.permission.SEND_SMS)
                     }
-                    App(applicationContext,reference)
+                    App(applicationContext,reference,databaseHelper)
                 }
             }
         }
     }
 }
 @Composable
-fun App(context:Context,databaseReference: DatabaseReference) {
+fun App(context:Context,databaseReference: DatabaseReference,databaseHelper: UserDatabaseHelper) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = "login"
     ) {
         composable("reg") {
-            RegistrationPage(context,navController = navController,databaseReference)
+            RegistrationPage(context,navController = navController,databaseReference,databaseHelper)
         }
         composable("login") {
-            LoginPage(context,navController = navController)
+            LoginPage(context,navController = navController,databaseHelper)
         }
         composable("forgotpw") {
-            //ForgotPasswordPage(context,navController = navController,databaseReference)
+            ForgotPasswordPage(context,navController = navController,databaseReference,databaseHelper)
         }
-        composable("detail") {
-            UserDetailPage(context,navController =navController)
-        }
-        composable("dashboard") {
-            //DashboardPage(context,navController =navController,databaseReference)
-        }
-        composable("bmi") {
-            //BMIPage(context,navController =navController,databaseReference)
+        composable("dashboard/{email}") {
+                backStackEntry ->
+            val email = backStackEntry.arguments?.getString("email")
+            DashboardPage(context,navController =navController,databaseHelper,email=email)
         }
         composable("caloriemgt") {
-            //CaloriePage(context,navController =navController,databaseReference)
+            CaloriePage(context,navController =navController)
         }
         composable("docsearch") {
             //UserDetailPage(navController =navController)

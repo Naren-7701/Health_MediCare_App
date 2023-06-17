@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 fun CaloriePage(context: Context, navController: NavController)
 {
     Scaffold(
-        topBar = { TopApplicationBar("CALORIE MANAGE","dashboard",navController) },
+        topBar = { TopApplicationBar("CALORIE MANAGE","dashboard/{email}",navController) },
         content = {pad -> Calorie(pad,context,navController) },
         bottomBar = { BottomBar(navController)}
     )
@@ -50,7 +50,7 @@ fun Calorie(h: PaddingValues, context: Context, navController: NavController) {
         verticalArrangement = Arrangement.SpaceEvenly
     )
     {
-        var bmi = remember { mutableStateOf(0f) }
+        val bmi = remember { mutableStateOf(0f) }
         Text(
             text = "Your Current BMI: " + bmi.value,
             color = Color.Black,
@@ -96,20 +96,6 @@ fun Calorie(h: PaddingValues, context: Context, navController: NavController) {
                     fontWeight = FontWeight.Bold
                 )
             }
-        }
-        Button(
-            onClick = {
-                navController.navigate("bmi")
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
-            shape = RoundedCornerShape(5.dp)
-        )
-        {
-            Text(
-                text = "UPDATE BMI ", color = Color.White, fontSize = 20.sp,
-                textAlign = TextAlign.Center
-            )
         }
     }
 }
