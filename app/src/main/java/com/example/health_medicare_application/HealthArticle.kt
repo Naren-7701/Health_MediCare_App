@@ -22,7 +22,7 @@ import androidx.navigation.NavController
 fun HealthArticlePage(navController: NavController)
 {
     Scaffold(
-        topBar = { TopApplicationBar("HEALTH ARTICLE","dashboard/{email}",navController) },
+        topBar = { TopBar("HEALTH ARTICLE") },
         content = {pad -> HealthNews(pad) },
         bottomBar = { BottomBar(navController)}
     )

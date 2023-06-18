@@ -11,7 +11,7 @@ data class UserDetailDb(
     @ColumnInfo(name = "mobile") val mobile: String?,
     @ColumnInfo(name = "password") val password: String?,
     @ColumnInfo(name = "name") val name: String?,
-    @ColumnInfo(name = "bmi") val bmi:Float?,
+    @ColumnInfo(name = "bmi") val bmi:Int?,
     @ColumnInfo(name = "age") val age: String?,
     @ColumnInfo(name = "gender") val gender: String?,
     @ColumnInfo(name = "bloodgrp") val bloodgrp: String?,

@@ -1,5 +1,6 @@
 package com.example.health_medicare_application
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -13,8 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Phone
@@ -38,22 +37,14 @@ import androidx.navigation.NavController
 fun EmergencyContactPage(navController: NavController)
 {
     Scaffold(
-        topBar = { TopApplicationBar("EMERGENCY DIAL","dashboard/{email}",navController) },
-        content = {pad -> ListView(pad) },
+        topBar = { TopBar("EMERGENCY DIAL") },
+        content = {pad -> EmergencyContactPageInfo(pad) },
         bottomBar = { BottomBar(navController)}
     )
 }
-data class MobileNumber(val name:String, val number:Int)
-val Numbers = mutableListOf<MobileNumber>()
 
 @Composable
-fun ListView(h:PaddingValues) {
-    Numbers.add(MobileNumber("Police Station",100))
-    Numbers.add(MobileNumber("Fire Extinguish",101))
-    Numbers.add(MobileNumber("Ambulance Help",102))
-    Numbers.add(MobileNumber("Rail Accident",1072))
-    Numbers.add(MobileNumber("Road Accident",1073))
-    Numbers.add(MobileNumber("Women Helpline",1091))
+fun EmergencyContactPageInfo(h:PaddingValues) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,88 +52,244 @@ fun ListView(h:PaddingValues) {
             .background(color = Color.White)
             .padding(25.dp),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.SpaceEvenly,
     )
     {
-        Row(horizontalArrangement = Arrangement.Center)
-        {
-
-            Text(
-                text = "Important Emergency Contacts",
-                color = Color.Black,
-                fontSize = 21.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
-            )
-        }
-        LazyColumn() {
-            items(Numbers) { model ->
-                EmergencyDial(model = model)
-            }
-        }
-    }
-}
-@Composable
-fun EmergencyDial(model: MobileNumber) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().padding(top = 15.dp)
-    ) {
         val context = LocalContext.current
         Text(
-            text = model.name,
+            text = "Important Emergency Contacts",
             color = Color.Black,
-            fontSize = 19.sp,
+            fontSize = 21.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.width(150.dp)
+            modifier = Modifier.fillMaxWidth().padding(top=25.dp),
         )
-        IconButton(
-            onClick = {
-                val u = Uri.parse("tel:" + model.number)
-                val inten = Intent(Intent.ACTION_DIAL, u)
-                try {
-                    context.startActivity(inten)
-                } catch (s: SecurityException) {
-                    Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
-                }
-            },
-        )
+        Row(horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxWidth())
         {
-            Icon(
-                imageVector = Icons.Outlined.Phone,
-                contentDescription = "Phone",
-                tint = Color(0xFF673AB7),
-                modifier = Modifier.size(35.dp)
+            Text(
+                text = "Police \n"+"100",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.width(150.dp)
             )
+            IconButton(
+                onClick = { call(100, context) }
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Phone,
+                    contentDescription = "Phone",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+            IconButton(
+                onClick = {
+                    message(100,context)
+                },
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Message,
+                    contentDescription = "Message",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
         }
-        IconButton(
-            onClick = {
-                val msg = Uri.parse("sms:" + model.number)
-                val msginten = Intent(Intent.ACTION_VIEW, msg)
-                try {
-                    context.startActivity(msginten)
-                } catch (s: SecurityException) {
-                    Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
-                }
-            },
-        )
+        Row(horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth())
         {
-            Icon(
-                imageVector = Icons.Outlined.Message,
-                contentDescription = "Message",
-                tint = Color(0xFF673AB7),
-                modifier = Modifier.size(35.dp)
+            Text(
+                text = "Fire Extinguish \n"+"101",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.width(150.dp)
             )
+            IconButton(
+                onClick = { call(101, context) }
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Phone,
+                    contentDescription = "Phone",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+            IconButton(
+                onClick = {
+                    message(101,context)
+                },
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Message,
+                    contentDescription = "Message",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
         }
-    }
-    Row(horizontalArrangement = Arrangement.Start)
-    {
+        Row(horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth())
+        {
+            Text(
+                text = "Ambulance \n"+"102",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.width(150.dp)
+            )
+            IconButton(
+                onClick = { call(102, context) }
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Phone,
+                    contentDescription = "Phone",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+            IconButton(
+                onClick = {
+                    message(102,context)
+                },
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Message,
+                    contentDescription = "Message",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+        }
+        Row(horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth())
+        {
+            Text(
+                text = "Rail Accident \n"+"1072",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.width(150.dp)
+            )
+            IconButton(
+                onClick = { call(1072,context) }
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Phone,
+                    contentDescription = "Phone",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+            IconButton(
+                onClick = {
+                    message(1072,context)
+                },
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Message,
+                    contentDescription = "Message",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+        }
+        Row(horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth())
+        {
+            Text(
+                text = "Road Accident \n"+"1073",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.width(150.dp)
+            )
+            IconButton(
+                onClick = { call(1073, context) }
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Phone,
+                    contentDescription = "Phone",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+            IconButton(
+                onClick = {
+                    message(1073,context)
+                },
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Message,
+                    contentDescription = "Message",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+        }
+        Row(horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth())
+        {
+            Text(
+                text = "Women Help \n"+"1091",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.width(150.dp)
+            )
+            IconButton(
+                onClick = { call(1091, context) }
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Phone,
+                    contentDescription = "Phone",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+            IconButton(
+                onClick = {
+                    message(1091,context)
+                },
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Message,
+                    contentDescription = "Message",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+            }
+        }
         Text(
-            text = "" + model.number,
-            color = Color.Black,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold
+            text = "Contact them whenever Necessary",
+            color = Color.DarkGray,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
         )
+    }
+}
+fun call(number:Int,context:Context) {
+    val u = Uri.parse("tel:" + number)
+    val inten = Intent(Intent.ACTION_DIAL, u)
+    try {
+        context.startActivity(inten)
+    } catch (s: SecurityException) {
+        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
+    }
+}
+fun message(number:Int,context:Context) {
+    val msg = Uri.parse("sms:" + number)
+    val msginten = Intent(Intent.ACTION_VIEW, msg)
+    try {
+        context.startActivity(msginten)
+    } catch (s: SecurityException) {
+        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
     }
 }

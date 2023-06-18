@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 fun CaloriePage(context: Context, navController: NavController)
 {
     Scaffold(
-        topBar = { TopApplicationBar("CALORIE MANAGE","dashboard/{email}",navController) },
+        topBar = { TopBar("CALORIE MANAGE") },
         content = {pad -> Calorie(pad,context,navController) },
         bottomBar = { BottomBar(navController)}
     )
@@ -50,52 +50,6 @@ fun Calorie(h: PaddingValues, context: Context, navController: NavController) {
         verticalArrangement = Arrangement.SpaceEvenly
     )
     {
-        val bmi = remember { mutableStateOf(0f) }
-        Text(
-            text = "Your Current BMI: " + bmi.value,
-            color = Color.Black,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 35.dp)
-        )
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center)
-        {
-            if (bmi.value < 18.5) {
-                Text(
-                    text = "UNDER-WEIGHT",
-                    color = Color.Blue,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            } else if (18.5 < bmi.value && bmi.value < 24.9) {
-                Text(
-                    text = "NORMAL",
-                    color = Color.Green,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            } else if (25.0 < bmi.value && bmi.value < 29.9) {
-                Text(
-                    text = "OVER-WEIGHT",
-                    color = Color(0xFFDDC918),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            } else if (30.0 < bmi.value && bmi.value < 34.9) {
-                Text(
-                    text = "OBESE",
-                    color = Color(0xFFFF9800),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            } else {
-                Text(
-                    text = "EXTREMELY OBESE",
-                    color = Color.Red,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
+
     }
 }

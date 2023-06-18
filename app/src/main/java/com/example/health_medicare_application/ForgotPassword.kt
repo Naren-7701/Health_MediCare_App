@@ -1,6 +1,7 @@
 package com.example.health_medicare_application
 
 import android.content.Context
+import android.telephony.SmsManager
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -16,6 +17,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Key
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Button
@@ -37,6 +39,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -64,12 +67,30 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
         verticalArrangement = Arrangement.SpaceEvenly
     )
     {
+        val regemail = remember { mutableStateOf(TextFieldValue("")) }
+        val usrmailname = remember { mutableStateOf("") }
         val mobile = remember { mutableStateOf(TextFieldValue("")) }
         val maxmobileLength = 10
-        val otp = remember { mutableStateOf(TextFieldValue("")) }
-        val maxotpLength = 6
         val newpw = remember { mutableStateOf(TextFieldValue("")) }
         val passwordVisible1 = remember { mutableStateOf(false) }
+        val otpuser = remember { mutableStateOf(TextFieldValue("")) }
+        val maxotpLength = 6
+        val otpsys = remember { mutableStateOf("") }
+        TextField(
+            value = regemail.value,
+            onValueChange = {
+                regemail.value = it
+            },
+            singleLine = true,
+            colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
+            label = { Text("Enter Email ID") },
+            modifier = Modifier
+                .fillMaxWidth().padding(top = 50.dp)
+                .border(BorderStroke(2.dp, Color(0xFF673AB7))),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) }
+        )
+        usrmailname.value = regemail.value.text.substringBefore("@")
         TextField(
             value = mobile.value,
             onValueChange = {
@@ -82,11 +103,37 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             leadingIcon = { Icon(Icons.Outlined.Phone, contentDescription = null) }
         )
+        Button(
+            onClick = {
+                otpsys.value = otp();
+                val smsManager: SmsManager = SmsManager.getDefault()
+                smsManager.sendTextMessage(
+                    "+91" + mobile.value,
+                    null,
+                    "Password Reset OTP is " + otpsys.value + " - Health Medicare App",
+                    null,
+                    null
+                )
+                Toast.makeText(
+                    context, "OTP Sent Sucessfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
+            shape = RoundedCornerShape(5.dp)
+        )
+        {
+            Text(
+                text = "GENERATE OTP", color = Color.White, fontSize = 20.sp,
+                textAlign = TextAlign.Center
+            )
+        }
         TextField(
-            value = otp.value,
+            value = otpuser.value,
             onValueChange = {
                 if (it.text.length <= maxotpLength)
-                    otp.value = it
+                    otpuser.value = it
             },
             colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
             label = { Text("Enter 6 Digit OTP") },
@@ -127,11 +174,21 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
         )
         Button(
             onClick = {
-                navController.navigate("dashboard");
-                Toast.makeText(
-                    context, "Password Reset Successful ",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (otpsys.value == otpuser.value.text) {
+                    databaseReference.child("" + usrmailname.value).child("password")
+                        .setValue(newpw.value.text);
+                    databaseHelper.updatePassword(regemail.value.text, newpw.value.text);
+                    Toast.makeText(
+                        context, "Password Reset Successful ",
+                        Toast.LENGTH_SHORT
+                    ).show();
+                    navController.navigate("dashboard/${regemail.value.text}")
+                } else {
+                    Toast.makeText(
+                        context, "Wrong OTP",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
@@ -143,4 +200,9 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
             )
         }
     }
+}
+fun otp():String
+{
+    val randomInteger = (1..1000000).random()
+    return randomInteger.toString()
 }

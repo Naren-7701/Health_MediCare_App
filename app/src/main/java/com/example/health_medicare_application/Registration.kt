@@ -89,6 +89,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
     )
     {
         val regemail = remember { mutableStateOf(TextFieldValue("")) }
+        val usrmailname = remember { mutableStateOf("") }
         val name = remember { mutableStateOf(TextFieldValue("")) }
         val mobile = remember { mutableStateOf(TextFieldValue("")) }
         val maxmobileLength = 10
@@ -116,6 +117,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) }
         )
+        usrmailname.value = regemail.value.text.substringBefore("@")
         TextField(
             value = name.value,
             onValueChange = {
@@ -230,7 +232,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
             )
         }
         Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth()
         )
         {
@@ -240,8 +242,8 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                     systolbp.value = it
                 },
                 colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
-                label = { Text("Systol") },
-                modifier = Modifier.width(150.dp).border(BorderStroke(2.dp, Color(0xFF673AB7))),
+                placeholder={Text("Systol")},
+                modifier = Modifier.width(100.dp).border(BorderStroke(2.dp, Color(0xFF673AB7))),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             )
             TextField(
@@ -250,8 +252,8 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                     diastolbp.value = it
                 },
                 colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
-                label = { Text("Diastol") },
-                modifier = Modifier.width(150.dp).border(BorderStroke(2.dp, Color(0xFF673AB7))),
+                placeholder={Text("Diastol")},
+                modifier = Modifier.width(100.dp).border(BorderStroke(2.dp, Color(0xFF673AB7))),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             )
         }
@@ -266,7 +268,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                     )
                 databaseReference.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        databaseReference.child(name.value.text + "").setValue(userObj)
+                        databaseReference.child(usrmailname.value+"").setValue(userObj)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -283,7 +285,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                         mobile = mobile.value.text,
                         password = regpw.value.text,
                         name = name.value.text,
-                        bmi = weight.value.text.toFloat() * 10000 / (height.value.text.toFloat() * height.value.text.toFloat()),
+                        bmi = (weight.value.text.toFloat() * 10000 / (height.value.text.toFloat() * height.value.text.toFloat())).toInt(),
                         age = age.value.text,
                         gender = gen,
                         bloodgrp = blg,

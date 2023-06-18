@@ -34,7 +34,7 @@ class UserDatabaseHelper(context: Context) :
                 "$COLUMN_MOBILE TEXT, " +
                 "$COLUMN_PASSWORD TEXT, " +
                 "$COLUMN_NAME TEXT, " +
-                "$COLUMN_BMI FLOAT, " +
+                "$COLUMN_BMI INT, " +
                 "$COLUMN_AGE TEXT, " +
                 "$COLUMN_GENDER TEXT, " +
                 "$COLUMN_BLOODGRP TEXT, " +
@@ -77,7 +77,7 @@ class UserDatabaseHelper(context: Context) :
                 mobile = cursor.getString(cursor.getColumnIndex(COLUMN_MOBILE)),
                 password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD)),
                 name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
-                bmi = cursor.getFloat(cursor.getColumnIndex(COLUMN_BMI)),
+                bmi = cursor.getInt(cursor.getColumnIndex(COLUMN_BMI)),
                 age = cursor.getString(cursor.getColumnIndex(COLUMN_AGE)),
                 gender = cursor.getString(cursor.getColumnIndex(COLUMN_GENDER)),
                 bloodgrp = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODGRP)),
@@ -90,29 +90,11 @@ class UserDatabaseHelper(context: Context) :
     }
 
     @SuppressLint("Range")
-    fun getAllUsers(): List<UserDetailDb> {
-        val users = mutableListOf<UserDetailDb>()
-        val db = readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
-        if (cursor.moveToFirst()) {
-            do {
-                val user = UserDetailDb(
-                    id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
-                    email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL)),
-                    mobile = cursor.getString(cursor.getColumnIndex(COLUMN_MOBILE)),
-                    password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD)),
-                    name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
-                    bmi = cursor.getFloat(cursor.getColumnIndex(COLUMN_BMI)),
-                    age = cursor.getString(cursor.getColumnIndex(COLUMN_AGE)),
-                    gender = cursor.getString(cursor.getColumnIndex(COLUMN_GENDER)),
-                    bloodgrp = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODGRP)),
-                    bloodpres = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODPRES)),
-                )
-                users.add(user)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
+    fun updatePassword(email: String?, password: String?) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(COLUMN_PASSWORD, password.toString())
+        db.update(TABLE_NAME, values, "email=?", arrayOf(email.toString()))
         db.close()
-        return users
     }
 }

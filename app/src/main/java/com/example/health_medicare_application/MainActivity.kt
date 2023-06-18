@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.ContactEmergency
 import androidx.compose.material.icons.filled.MedicalServices
@@ -147,26 +146,6 @@ fun TopDashboardBar(abc:String) {
                 Icon(
                     imageVector = Icons.Filled.Menu,
                     contentDescription = "Menu"
-                )
-            }
-        })
-}
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopApplicationBar(abc:String,back:String,navController: NavController) {
-    CenterAlignedTopAppBar(
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = White),
-        title = {
-            Text(
-                "" + abc, color = Color(0xFF673AB7),
-                fontSize = 25.sp, fontWeight = FontWeight.Bold
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = { navController.navigate(""+back) }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back Button"
                 )
             }
         })

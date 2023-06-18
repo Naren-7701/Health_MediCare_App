@@ -10,12 +10,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Bloodtype
 import androidx.compose.material.icons.outlined.CalendarMonth
-import androidx.compose.material.icons.outlined.WaterDrop
-import androidx.compose.material3.Card
+import androidx.compose.material.icons.outlined.Call
+import androidx.compose.material.icons.outlined.MonitorHeart
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Person4
+import androidx.compose.material.icons.outlined.Scale
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -51,152 +57,196 @@ fun DashboardContent(h: PaddingValues, context: Context, navController: NavContr
                 .background(color = Color.White)
                 .padding(25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.SpaceEvenly
         )
         {
             val bmi = user.bmi
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth().padding(top = 50.dp)
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth().padding(top = 30.dp)
             )
             {
-                Card(modifier=Modifier.size(84.dp))
-                {
-                    if (user.gender == "Male") {
-                        Image(
-                            painter = painterResource(id = R.drawable.men),
-                            contentDescription = "Men",
-                            modifier = Modifier.size(80.dp).padding(start = 2.dp,top=2.dp)
-                        )
-                    } else if (user.gender == "Female") {
-                        Image(
-                            painter = painterResource(id = R.drawable.women),
-                            contentDescription = "Women",
-                            modifier = Modifier.size(80.dp).padding(start = 2.dp,top=2.dp)
-                        )
-                    } else {
-                        Image(
-                            painter = painterResource(id = R.drawable.tg),
-                            contentDescription = "Transgender",
-                            modifier = Modifier.size(80.dp).padding(start = 2.dp,top=2.dp)
-                        )
-                    }
+                Icon(
+                    imageVector = Icons.Outlined.Person,
+                    contentDescription = "User",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text = user.name.toString().uppercase(),
+                    color = Color.Black,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth()
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Call,
+                    contentDescription = "Mobile",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text = user.mobile.toString().uppercase(),
+                    color = Color.Black,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Person4,
+                    contentDescription = "Sex",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                if (user.gender == "Male") {
+                    Image(
+                        painter = painterResource(id = R.drawable.men),
+                        contentDescription = "Men",
+                        modifier = Modifier.size(30.dp)
+                    )
+                } else if (user.gender == "Female") {
+                    Image(
+                        painter = painterResource(id = R.drawable.women),
+                        contentDescription = "Women",
+                        modifier = Modifier.size(30.dp)
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.tg),
+                        contentDescription = "Transgender",
+                        modifier = Modifier.size(30.dp)
+                    )
                 }
-                Text(
-                    text = user.name.toString().uppercase(), color = Color.Black, fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Spacer(modifier = Modifier.padding(7.dp))
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth()
-            )
-            {
-                Text(
-                    text = "BMI : ", color = Color(0xFF673AB7), fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Text(
-                    text = bmi.toString(), color = Color.Black, fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Spacer(modifier = Modifier.padding(7.dp))
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth()
-            )
-            {
-                if (bmi != null) {
-                    if (bmi < 18.5) {
-                        Text(
-                            text = "UNDER-WEIGHT",
-                            color = Color(0xFF3F51B5),
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    } else if (bmi in 18.5..24.9) {
-                        Text(
-                            text = "NORMAL",
-                            color = Color(0xFF028B7F),
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    } else if (bmi in 25.0..29.9) {
-                        Text(
-                            text = "OVER-WEIGHT",
-                            color = Color(0xFFB8A81E),
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    } else if (bmi in 30.0..34.9) {
-                        Text(
-                            text = "OBESE",
-                            color = Color(0xFFFF9800),
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    } else {
-                        Text(
-                            text = "EXTREMELY OBESE",
-                            color = Color.Red,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.padding(7.dp))
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth()
-            )
-            {
+                Spacer(modifier = Modifier.padding(8.dp))
                 Icon(
                     imageVector = Icons.Outlined.CalendarMonth,
                     contentDescription = "Age",
                     tint = Color(0xFF673AB7),
                     modifier = Modifier.size(35.dp)
                 )
+                Spacer(modifier = Modifier.padding(5.dp))
                 Text(
-                    text = " "+user.age.toString(), color = Color.Black, fontSize = 26.sp,
+                    text = user.age.toString(), color = Color.Black, fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.padding(8.dp))
+                Icon(
+                    imageVector = Icons.Outlined.Bloodtype,
+                    contentDescription = "Bloodgroup",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text = user.bloodgrp.toString(),
+                    color = Color.Black,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
-            Spacer(modifier = Modifier.padding(7.dp))
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.Scale,
+                    contentDescription = "Sex",
+                    tint = Color(0xFF673AB7),
+                    modifier = Modifier.size(35.dp)
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                Text(
+                    text = bmi.toString(), color = Color.Black, fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+                if (bmi != null) {
+                    if (bmi.toFloat() < 18.5) {
+                        Text(
+                            text = "(UNDER-WEIGHT)",
+                            color = Color(0xFF3F51B5),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    } else if (bmi.toFloat() in 18.5..24.9) {
+                        Text(
+                            text = "(NORMAL)",
+                            color = Color(0xFF028B7F),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    } else if (bmi.toFloat() in 25.0..29.9) {
+                        Text(
+                            text = "(OVER-WEIGHT)",
+                            color = Color(0xFFB8A81E),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    } else if (bmi.toFloat() in 30.0..34.9) {
+                        Text(
+                            text = "(OBESE)",
+                            color = Color(0xFFFF9800),
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    } else {
+                        Text(
+                            text = "(EXTREMELY OBESE)",
+                            color = Color.Red,
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
             Row(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
             )
             {
                 Icon(
-                    imageVector = Icons.Outlined.WaterDrop,
-                    contentDescription = "Bloodgroup",
+                    imageVector = Icons.Outlined.MonitorHeart,
+                    contentDescription = "Blood pressure",
                     tint = Color(0xFF673AB7),
                     modifier = Modifier.size(35.dp)
                 )
+                Spacer(modifier = Modifier.padding(5.dp))
                 Text(
-                    text = " "+user.bloodgrp.toString(), color = Color.Black, fontSize = 26.sp,
+                    text = user.bloodpres.toString(), color = Color.Black, fontSize = 21.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
-            Spacer(modifier = Modifier.padding(7.dp))
             Row(
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             )
             {
                 Text(
-                    text = "BP : ", color = Color(0xFF673AB7), fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = user.bloodpres.toString(), color = Color.Black, fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold
+                    text = "Be Cautious about your Weight !",
+                    color = Color.DarkGray,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
                 )
             }
+            Image(
+                painter = painterResource(id = R.drawable.bmi_chart),
+                contentDescription = "BMI",
+                modifier = Modifier.width(400.dp).height(200.dp)
+            )
         }
     }
 }

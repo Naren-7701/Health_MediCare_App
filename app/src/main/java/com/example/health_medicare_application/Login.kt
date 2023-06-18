@@ -140,15 +140,13 @@ fun LoginFill(h: PaddingValues,context: Context, navController: NavController,da
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                } else {
-                    Toast.makeText(
-                        context, "Invalid User Credentials ",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    else {
+                        Toast.makeText(
+                            context, "Invalid User Credentials ",
+                            Toast.LENGTH_SHORT
+                        ).show()
                 }
-
-
-
+                }
             },
             modifier=Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
