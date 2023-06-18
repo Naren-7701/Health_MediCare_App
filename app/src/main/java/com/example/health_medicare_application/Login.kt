@@ -1,23 +1,12 @@
 package com.example.health_medicare_application
 
 import android.content.Context
-import android.content.Intent
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -35,20 +24,27 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.health_medicare_application.ui.theme.Activityscreen
+import com.example.health_medicare_application.ui.theme.boxes
+import com.example.health_medicare_application.ui.theme.fillmaxwid
+import com.example.health_medicare_application.ui.theme.horzcenter
+import com.example.health_medicare_application.ui.theme.rcshape
+import com.example.health_medicare_application.ui.theme.reglogbut
+import com.example.health_medicare_application.ui.theme.reglogbuttxtcol
+import com.example.health_medicare_application.ui.theme.subtxtcol
+import com.example.health_medicare_application.ui.theme.subtxtsize
+import com.example.health_medicare_application.ui.theme.txtbold
+import com.example.health_medicare_application.ui.theme.txtcenter
+import com.example.health_medicare_application.ui.theme.vertspace
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,67 +59,56 @@ fun LoginPage(context: Context, navController: NavController,databaseHelper: Use
 @Composable
 fun LoginFill(h: PaddingValues,context: Context, navController: NavController,databaseHelper: UserDatabaseHelper) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxSize()
-            .background(color = Color.White)
-            .padding(25.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly
+        modifier = Activityscreen,
+        horizontalAlignment = horzcenter,
+        verticalArrangement = vertspace
     )
     {
-        val logemail = remember { mutableStateOf(TextFieldValue("")) }
-        val logpw = remember { mutableStateOf(TextFieldValue("")) }
-        val pwvisible = remember { mutableStateOf(false) }
+        val mail = remember { mutableStateOf(TextFieldValue("")) }
+        val pw = remember { mutableStateOf(TextFieldValue("")) }
+        val pwvisib = remember { mutableStateOf(false) }
+        val boxcolor = TextFieldDefaults.textFieldColors(containerColor = Color.White)
+        val butcolor = ButtonDefaults.buttonColors(Color(0xFF673AB7))
         Image(
             painter = painterResource(id = R.drawable.naren_logo),
             contentDescription = "Logo",
             modifier = Modifier.size(175.dp).padding(top = 25.dp)
         )
-        Text(
-            text = "Logo Image",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Italic,
-            color = Color.White
-        )
         TextField(
-            value = logemail.value,
+            value = mail.value,
             onValueChange = {
-                logemail.value = it
+                mail.value = it
             },
-            colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
+            colors = boxcolor,
             label = { Text("Enter Email ID") },
-            modifier = Modifier.fillMaxWidth().border(BorderStroke(2.dp, Color(0xFF673AB7))),
+            modifier = boxes,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) }
         )
         TextField(
-            value = logpw.value,
+            value = pw.value,
             onValueChange = {
-                logpw.value = it
+                pw.value = it
             },
-            colors = TextFieldDefaults.textFieldColors(containerColor = Color.White),
+            colors = boxcolor,
             label = { Text("Enter Password") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(BorderStroke(2.dp, Color(0xFF673AB7))),
-            visualTransformation = if (pwvisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+            modifier = boxes,
+            visualTransformation = if (pwvisib.value) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
-                if (pwvisible.value) {
-                    IconButton(onClick = { pwvisible.value = false }) {
+                if (pwvisib.value) {
+                    IconButton(onClick = { pwvisib.value = false }) {
                         Icon(
                             imageVector = Icons.Filled.Visibility,
-                            contentDescription = "show_password"
+                            contentDescription = "show_pw"
                         )
                     }
                 } else {
                     IconButton(
-                        onClick = { pwvisible.value = true }) {
+                        onClick = { pwvisib.value = true }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = "hide_password"
+                            contentDescription = "hide_pw"
                         )
                     }
                 }
@@ -131,64 +116,69 @@ fun LoginFill(h: PaddingValues,context: Context, navController: NavController,da
         )
         Button(
             onClick = {
-                if (logemail.value.text.isNotEmpty() && logpw.value.text.isNotEmpty()) {
-                    val user = databaseHelper.getUserByUseremail(logemail.value.text)
-                    if (user != null && user.password == logpw.value.text) {
-                        navController.navigate("dashboard/${logemail.value.text}");
+                if (mail.value.text.isNotEmpty() && pw.value.text.isNotEmpty()) {
+                    val user = databaseHelper.getUserByUseremail(mail.value.text)
+                    if (user != null && user.password == pw.value.text) {
+                        navController.navigate("dashboard/${mail.value.text}");
                         Toast.makeText(
                             context, "Log In Successful ",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                    else {
+                    } else {
                         Toast.makeText(
-                            context, "Invalid User Credentials ",
+                            context, "Invalid Credentials ",
                             Toast.LENGTH_SHORT
                         ).show()
-                }
+                    }
                 }
             },
-            modifier=Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
-            shape = RoundedCornerShape(5.dp)
+            modifier = fillmaxwid,
+            colors = butcolor,
+            shape = rcshape
         )
         {
             Text(
-                text = "LOG IN / SIGN IN", color = Color.White, fontSize = 20.sp
+                text = "LOG IN / SIGN IN", color = reglogbuttxtcol, fontSize = reglogbut
             )
         }
         Text(
-            text = "Forgot Password ?", color = Color.DarkGray, fontSize = 15.sp, fontWeight = FontWeight.Bold
+            text = "Forgot Password ?",
+            color = subtxtcol,
+            fontSize = subtxtsize,
+            fontWeight = txtbold
         )
         Button(
             onClick = {
                 navController.navigate("forgotpw")
             },
-            modifier=Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
-            shape = RoundedCornerShape(5.dp)
+            modifier = fillmaxwid,
+            colors = butcolor,
+            shape = rcshape
         )
         {
             Text(
-                text = "RESET PASSWORD", color = Color.White, fontSize = 20.sp,
-                textAlign = TextAlign.Center
+                text = "RESET PASSWORD", color = reglogbuttxtcol, fontSize = reglogbut,
+                textAlign = txtcenter
             )
         }
         Text(
-            text = "New User ? Register yourself", color = Color.DarkGray, fontSize = 15.sp, fontWeight = FontWeight.Bold
+            text = "New User ? Register yourself",
+            color = subtxtcol,
+            fontSize = subtxtsize,
+            fontWeight = txtbold
         )
         Button(
             onClick = {
                 navController.navigate("reg")
             },
-            modifier=Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
-            shape = RoundedCornerShape(5.dp)
+            modifier = fillmaxwid,
+            colors = butcolor,
+            shape = rcshape
         )
         {
             Text(
-                text = "REGISTER / SIGN UP", color = Color.White, fontSize = 20.sp,
-                textAlign = TextAlign.Center
+                text = "REGISTER / SIGN UP", color = reglogbuttxtcol, fontSize = reglogbut,
+                textAlign = txtcenter
             )
         }
     }

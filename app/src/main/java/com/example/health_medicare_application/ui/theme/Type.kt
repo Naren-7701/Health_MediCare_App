@@ -1,12 +1,26 @@
 package com.example.health_medicare_application.ui.theme
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Typography
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
@@ -16,28 +30,32 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
 )
-val MyStyle = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-)
-/* Other default text styles to override
-titleLarge = TextStyle(
-    fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.Normal,
-    fontSize = 22.sp,
-    lineHeight = 28.sp,
-    letterSpacing = 0.sp
-),
-labelSmall = TextStyle(
-    fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.Medium,
-    fontSize = 11.sp,
-    lineHeight = 16.sp,
-    letterSpacing = 0.5.sp
-)
-*/
+
+val purple673 = Color(0xFF673AB7)
+val purewhite = Color(0xFFFFFFFF)
+
+val Activityscreen = Modifier.fillMaxWidth().fillMaxSize().background(color = Color.White).padding(25.dp)
+val fillmaxwid = Modifier.fillMaxWidth()
+val wid150 = Modifier.width(150.dp)
+val horzcenter = Alignment.CenterHorizontally
+val horzspacear = Arrangement.SpaceAround
+val horzstart = Arrangement.Start
+val vertspace=Arrangement.SpaceEvenly
+
+val boxes= Modifier.fillMaxWidth().border(BorderStroke(2.dp, Color(0xFF673AB7)))
+
+val rcshape= RoundedCornerShape(5.dp)
+val iconsize = Modifier.size(35.dp)
+
+val reglogbuttxtcol = Color.White
+val subtxtcol = Color.DarkGray
+
+val reglogbut = 20.sp
+val subtxtsize = 10.sp
+val fnt24 = 24.sp
+val fnt22 = 22.sp
+val fnt21 = 21.sp
+val fnt20 = 20.sp
+
+val txtbold = FontWeight.Bold
+var txtcenter = TextAlign.Center

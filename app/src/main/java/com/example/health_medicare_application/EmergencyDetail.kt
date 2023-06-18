@@ -4,16 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Phone
@@ -24,13 +18,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.health_medicare_application.ui.theme.Activityscreen
+import com.example.health_medicare_application.ui.theme.fillmaxwid
+import com.example.health_medicare_application.ui.theme.fnt20
+import com.example.health_medicare_application.ui.theme.fnt21
+import com.example.health_medicare_application.ui.theme.iconsize
+import com.example.health_medicare_application.ui.theme.purple673
+import com.example.health_medicare_application.ui.theme.subtxtcol
+import com.example.health_medicare_application.ui.theme.subtxtsize
+import com.example.health_medicare_application.ui.theme.txtbold
+import com.example.health_medicare_application.ui.theme.vertspace
+import com.example.health_medicare_application.ui.theme.wid150
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,35 +43,31 @@ fun EmergencyContactPage(navController: NavController)
         bottomBar = { BottomBar(navController)}
     )
 }
-
 @Composable
 fun EmergencyContactPageInfo(h:PaddingValues) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxSize()
-            .background(color = Color.White)
-            .padding(25.dp),
+        modifier = Activityscreen,
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = vertspace,
     )
     {
         val context = LocalContext.current
         Text(
             text = "Important Emergency Contacts",
-            color = Color.Black,
-            fontSize = 21.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.fillMaxWidth().padding(top=25.dp),
+            fontSize = fnt21,
+            fontWeight = txtbold,
+            modifier = fillmaxwid.padding(top = 25.dp),
         )
-        Row(horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth())
+        Row(
+            horizontalArrangement = vertspace,
+            modifier = fillmaxwid
+        )
         {
             Text(
-                text = "Police \n"+"100",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.width(150.dp)
+                text = "Police \n" + "100",
+                fontSize = fnt20,
+                fontWeight = txtbold,
+                modifier = wid150
             )
             IconButton(
                 onClick = { call(100, context) }
@@ -79,32 +76,34 @@ fun EmergencyContactPageInfo(h:PaddingValues) {
                 Icon(
                     imageVector = Icons.Outlined.Phone,
                     contentDescription = "Phone",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
             IconButton(
                 onClick = {
-                    message(100,context)
+                    message(100, context)
                 },
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Message,
                     contentDescription = "Message",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
         }
-        Row(horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth())
+        Row(
+            horizontalArrangement = vertspace,
+            modifier = fillmaxwid
+        )
         {
             Text(
-                text = "Fire Extinguish \n"+"101",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.width(150.dp)
+                text = "Fire Extinguish \n" + "101",
+                fontSize = fnt20,
+                fontWeight = txtbold,
+                modifier = wid150
             )
             IconButton(
                 onClick = { call(101, context) }
@@ -113,32 +112,34 @@ fun EmergencyContactPageInfo(h:PaddingValues) {
                 Icon(
                     imageVector = Icons.Outlined.Phone,
                     contentDescription = "Phone",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
             IconButton(
                 onClick = {
-                    message(101,context)
+                    message(101, context)
                 },
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Message,
                     contentDescription = "Message",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
         }
-        Row(horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth())
+        Row(
+            horizontalArrangement = vertspace,
+            modifier = fillmaxwid
+        )
         {
             Text(
-                text = "Ambulance \n"+"102",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.width(150.dp)
+                text = "Ambulance \n" + "102",
+                fontSize = fnt20,
+                fontWeight = txtbold,
+                modifier = wid150
             )
             IconButton(
                 onClick = { call(102, context) }
@@ -147,66 +148,70 @@ fun EmergencyContactPageInfo(h:PaddingValues) {
                 Icon(
                     imageVector = Icons.Outlined.Phone,
                     contentDescription = "Phone",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
             IconButton(
                 onClick = {
-                    message(102,context)
+                    message(102, context)
                 },
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Message,
                     contentDescription = "Message",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
         }
-        Row(horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth())
+        Row(
+            horizontalArrangement = vertspace,
+            modifier = fillmaxwid
+        )
         {
             Text(
-                text = "Rail Accident \n"+"1072",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.width(150.dp)
+                text = "Rail Accident \n" + "1072",
+                fontSize = fnt20,
+                fontWeight = txtbold,
+                modifier = wid150
             )
             IconButton(
-                onClick = { call(1072,context) }
+                onClick = { call(1072, context) }
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Phone,
                     contentDescription = "Phone",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
             IconButton(
                 onClick = {
-                    message(1072,context)
+                    message(1072, context)
                 },
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Message,
                     contentDescription = "Message",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
         }
-        Row(horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth())
+        Row(
+            horizontalArrangement = vertspace,
+            modifier = fillmaxwid
+        )
         {
             Text(
-                text = "Road Accident \n"+"1073",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.width(150.dp)
+                text = "Road Accident \n" + "1073",
+                fontSize = fnt20,
+                fontWeight = txtbold,
+                modifier = wid150
             )
             IconButton(
                 onClick = { call(1073, context) }
@@ -215,32 +220,34 @@ fun EmergencyContactPageInfo(h:PaddingValues) {
                 Icon(
                     imageVector = Icons.Outlined.Phone,
                     contentDescription = "Phone",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
             IconButton(
                 onClick = {
-                    message(1073,context)
+                    message(1073, context)
                 },
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Message,
                     contentDescription = "Message",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
         }
-        Row(horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth())
+        Row(
+            horizontalArrangement = vertspace,
+            modifier = fillmaxwid
+        )
         {
             Text(
-                text = "Women Help \n"+"1091",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.width(150.dp)
+                text = "Women Help \n" + "1091",
+                fontSize = fnt20,
+                fontWeight = txtbold,
+                modifier = wid150
             )
             IconButton(
                 onClick = { call(1091, context) }
@@ -249,29 +256,29 @@ fun EmergencyContactPageInfo(h:PaddingValues) {
                 Icon(
                     imageVector = Icons.Outlined.Phone,
                     contentDescription = "Phone",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
             IconButton(
                 onClick = {
-                    message(1091,context)
+                    message(1091, context)
                 },
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Message,
                     contentDescription = "Message",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
             }
         }
         Text(
             text = "Contact them whenever Necessary",
-            color = Color.DarkGray,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            color = subtxtcol,
+            fontSize = subtxtsize,
+            fontWeight = txtbold,
         )
     }
 }

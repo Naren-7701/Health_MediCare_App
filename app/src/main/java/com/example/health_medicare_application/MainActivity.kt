@@ -1,6 +1,5 @@
 package com.example.health_medicare_application
 
-
 import android.Manifest
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +8,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.ContactEmergency
 import androidx.compose.material.icons.filled.MedicalServices
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.PieChartOutline
 import androidx.compose.material3.Button
@@ -27,7 +24,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,8 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -45,6 +39,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.health_medicare_application.ui.theme.Health_MediCare_ApplicationTheme
+import com.example.health_medicare_application.ui.theme.horzspacear
+import com.example.health_medicare_application.ui.theme.purewhite
+import com.example.health_medicare_application.ui.theme.purple673
+import com.example.health_medicare_application.ui.theme.txtbold
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -55,7 +53,6 @@ class MainActivity : ComponentActivity() {
         databaseHelper = UserDatabaseHelper(this)
         setContent {
             Health_MediCare_ApplicationTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -66,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         ActivityResultContracts.RequestPermission()
                     ) { isGranted ->
                         if (isGranted) {
-                            //permission accepted Do Something
+                            // Permission accepted Do Something
                         } else {
                             // Permission not accepted show message
                         }
@@ -88,33 +85,33 @@ fun App(context:Context,databaseReference: DatabaseReference,databaseHelper: Use
         startDestination = "login"
     ) {
         composable("reg") {
-            RegistrationPage(context,navController = navController,databaseReference,databaseHelper)
+            RegistrationPage(context,navController,databaseReference,databaseHelper)
         }
         composable("login") {
-            LoginPage(context,navController = navController,databaseHelper)
+            LoginPage(context,navController,databaseHelper)
         }
         composable("forgotpw") {
-            ForgotPasswordPage(context,navController = navController,databaseReference,databaseHelper)
+            ForgotPasswordPage(context,navController,databaseReference,databaseHelper)
         }
         composable("dashboard/{email}") {
                 backStackEntry ->
             val email = backStackEntry.arguments?.getString("email")
-            DashboardPage(context,navController =navController,databaseHelper,email=email)
+            DashboardPage(navController,databaseHelper,email)
         }
         composable("caloriemgt") {
-            CaloriePage(context,navController =navController)
+            CaloriePage(navController)
         }
         composable("docsearch") {
-            //UserDetailPage(navController =navController)
+            //UserDetailPage(navController)
         }
         composable("medsearch") {
-            //UserDetailPage(navController =navController)
+            //UserDetailPage(navController)
         }
         composable("article") {
-            HealthArticlePage(navController =navController)
+            HealthArticlePage(navController)
         }
         composable("emergency") {
-            EmergencyContactPage(navController =navController)
+            EmergencyContactPage(navController)
         }
     }
 }
@@ -122,71 +119,75 @@ fun App(context:Context,databaseReference: DatabaseReference,databaseHelper: Use
 @Composable
 fun TopBar(abc:String) {
     CenterAlignedTopAppBar(
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF673AB7)),
+        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = purple673),
         title = {
             Text(
-                "" + abc, color = Color(0xFFFFFFFF),
-                fontSize = 25.sp, fontWeight = FontWeight.Bold
+                "" + abc, color = purewhite,
+                fontSize = 25.sp, fontWeight = txtbold
             )
-        })
-}
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopDashboardBar(abc:String) {
-    CenterAlignedTopAppBar(
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = White),
-        title = {
-            Text(
-                "" + abc, color = Color(0xFF673AB7),
-                fontSize = 25.sp, fontWeight = FontWeight.Bold
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = { /* doSomething() */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Menu"
-                )
-            }
         })
 }
 @Composable
 fun BottomBar(navController: NavController) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .height(55.dp)
-        .background(Color(0xFF673AB7)),
-        horizontalArrangement = Arrangement.SpaceAround)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(55.dp)
+            .background(purple673),
+        horizontalArrangement = horzspacear
+    )
     {
+        val butcolor = ButtonDefaults.buttonColors(Color(0xFF673AB7))
+        val size24 = Modifier.size(24.dp)
         Button(
-            onClick = {navController.navigate("caloriemgt")},
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
+            onClick = { navController.navigate("caloriemgt") },
+            colors = butcolor,
         ) {
-            Icon(imageVector = Icons.Outlined.PieChartOutline, contentDescription = "Calorie", modifier = Modifier.size(24.dp))
+            Icon(
+                imageVector = Icons.Outlined.PieChartOutline,
+                contentDescription = "Calorie",
+                modifier = size24
+            )
         }
         Button(
-            onClick = {navController.navigate("article")},
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
+            onClick = { navController.navigate("article") },
+            colors = butcolor,
         ) {
-            Icon(imageVector = Icons.Filled.Article, contentDescription = "Article",modifier = Modifier.size(24.dp))
+            Icon(
+                imageVector = Icons.Filled.Article,
+                contentDescription = "Article",
+                modifier = size24
+            )
         }
         Button(
-            onClick = {navController.navigate("docsearch")},
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
+            onClick = { navController.navigate("docsearch") },
+            colors = butcolor,
         ) {
-            Icon(imageVector = Icons.Filled.Search, contentDescription = "Doctor Search",modifier = Modifier.size(24.dp))
+            Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = "Doctor",
+                modifier = size24
+            )
         }
         Button(
-            onClick = {navController.navigate("medsearch")},
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
+            onClick = { navController.navigate("medsearch") },
+            colors = butcolor,
         ) {
-            Icon(imageVector = Icons.Filled.MedicalServices, contentDescription = "Medicine Search",modifier = Modifier.size(24.dp))
+            Icon(
+                imageVector = Icons.Filled.MedicalServices,
+                contentDescription = "Medicine",
+                modifier = size24
+            )
         }
         Button(
-            onClick = {navController.navigate("emergency")},
-            colors = ButtonDefaults.buttonColors(Color(0xFF673AB7)),
+            onClick = { navController.navigate("emergency") },
+            colors = butcolor,
         ) {
-            Icon(imageVector = Icons.Filled.ContactEmergency, contentDescription = "Emergency Dial",modifier = Modifier.size(24.dp) )
+            Icon(
+                imageVector = Icons.Filled.ContactEmergency,
+                contentDescription = "Emergency",
+                modifier = size24
+            )
         }
     }
 }

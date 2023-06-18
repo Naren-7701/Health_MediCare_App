@@ -1,18 +1,13 @@
 package com.example.health_medicare_application
 
-import android.content.Context
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Bloodtype
@@ -27,219 +22,223 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.health_medicare_application.ui.theme.Activityscreen
+import com.example.health_medicare_application.ui.theme.fillmaxwid
+import com.example.health_medicare_application.ui.theme.fnt22
+import com.example.health_medicare_application.ui.theme.fnt24
+import com.example.health_medicare_application.ui.theme.horzcenter
+import com.example.health_medicare_application.ui.theme.horzstart
+import com.example.health_medicare_application.ui.theme.iconsize
+import com.example.health_medicare_application.ui.theme.purple673
+import com.example.health_medicare_application.ui.theme.subtxtcol
+import com.example.health_medicare_application.ui.theme.subtxtsize
+import com.example.health_medicare_application.ui.theme.txtbold
+import com.example.health_medicare_application.ui.theme.vertspace
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardPage(context: Context, navController: NavController,databaseHelper: UserDatabaseHelper,email:String?)
+fun DashboardPage(navController: NavController,databaseHelper: UserDatabaseHelper,email:String?)
 {
     Scaffold(
-        topBar = { TopDashboardBar("DASHBOARD") },
-        content = {pad -> DashboardContent(pad,context,navController,databaseHelper,email) },
+        topBar = { TopBar("DASHBOARD") },
+        content = {pad -> DashboardContent(pad,databaseHelper,email) },
         bottomBar = { BottomBar(navController)}
     )
 }
 @Composable
-fun DashboardContent(h: PaddingValues, context: Context, navController: NavController,databaseHelper: UserDatabaseHelper,email:String?) {
+fun DashboardContent(h: PaddingValues,databaseHelper: UserDatabaseHelper,email:String?) {
+    val sp5 = Modifier.padding(5.dp)
     val user = databaseHelper.getUserByUseremail(email.toString())
     if (user != null) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxSize()
-                .background(color = Color.White)
-                .padding(25.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
+            modifier = Activityscreen,
+            horizontalAlignment = horzcenter,
+            verticalArrangement = vertspace
         )
         {
             val bmi = user.bmi
             Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth().padding(top = 30.dp)
+                horizontalArrangement = horzstart,
+                modifier = fillmaxwid.padding(top = 30.dp)
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Person,
                     contentDescription = "User",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = sp5)
                 Text(
                     text = user.name.toString().uppercase(),
-                    color = Color.Black,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = fnt24,
+                    fontWeight = txtbold
                 )
             }
             Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth()
+                horizontalArrangement = horzstart,
+                modifier = fillmaxwid
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Call,
                     contentDescription = "Mobile",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = sp5)
                 Text(
                     text = user.mobile.toString().uppercase(),
-                    color = Color.Black,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = fnt24,
+                    fontWeight = txtbold
                 )
             }
             Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = horzstart,
+                modifier = fillmaxwid,
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Person4,
                     contentDescription = "Sex",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = sp5)
                 if (user.gender == "Male") {
                     Image(
                         painter = painterResource(id = R.drawable.men),
                         contentDescription = "Men",
-                        modifier = Modifier.size(30.dp)
+                        modifier = iconsize
                     )
                 } else if (user.gender == "Female") {
                     Image(
                         painter = painterResource(id = R.drawable.women),
                         contentDescription = "Women",
-                        modifier = Modifier.size(30.dp)
+                        modifier = iconsize
                     )
                 } else {
                     Image(
                         painter = painterResource(id = R.drawable.tg),
                         contentDescription = "Transgender",
-                        modifier = Modifier.size(30.dp)
+                        modifier = iconsize
                     )
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = sp5)
                 Icon(
                     imageVector = Icons.Outlined.CalendarMonth,
                     contentDescription = "Age",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = sp5)
                 Text(
-                    text = user.age.toString(), color = Color.Black, fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    text = user.age.toString(), fontSize = fnt22,
+                    fontWeight = txtbold
                 )
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = sp5)
                 Icon(
                     imageVector = Icons.Outlined.Bloodtype,
                     contentDescription = "Bloodgroup",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = sp5)
                 Text(
                     text = user.bloodgrp.toString(),
-                    color = Color.Black,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = fnt22,
+                    fontWeight = txtbold
                 )
             }
             Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = horzstart,
+                modifier = fillmaxwid,
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.Scale,
                     contentDescription = "Sex",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = sp5)
                 Text(
-                    text = bmi.toString(), color = Color.Black, fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
+                    text = bmi.toString(), fontSize = fnt22,
+                    fontWeight = txtbold
                 )
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = sp5)
                 if (bmi != null) {
                     if (bmi.toFloat() < 18.5) {
                         Text(
                             text = "(UNDER-WEIGHT)",
                             color = Color(0xFF3F51B5),
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold
+                            fontSize = fnt22,
+                            fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 18.5..24.9) {
                         Text(
                             text = "(NORMAL)",
                             color = Color(0xFF028B7F),
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold
+                            fontSize = fnt22,
+                            fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 25.0..29.9) {
                         Text(
                             text = "(OVER-WEIGHT)",
                             color = Color(0xFFB8A81E),
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold
+                            fontSize = fnt22,
+                            fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 30.0..34.9) {
                         Text(
                             text = "(OBESE)",
                             color = Color(0xFFFF9800),
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold
+                            fontSize = fnt22,
+                            fontWeight = txtbold
                         )
                     } else {
                         Text(
                             text = "(EXTREMELY OBESE)",
                             color = Color.Red,
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold
+                            fontSize = fnt22,
+                            fontWeight = txtbold
                         )
                     }
                 }
             }
             Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth()
+                horizontalArrangement = horzstart,
+                modifier = fillmaxwid
             )
             {
                 Icon(
                     imageVector = Icons.Outlined.MonitorHeart,
                     contentDescription = "Blood pressure",
-                    tint = Color(0xFF673AB7),
-                    modifier = Modifier.size(35.dp)
+                    tint = purple673,
+                    modifier = iconsize
                 )
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = sp5)
                 Text(
-                    text = user.bloodpres.toString(), color = Color.Black, fontSize = 21.sp,
-                    fontWeight = FontWeight.Bold
+                    text = user.bloodpres.toString(), fontSize = 21.sp,
+                    fontWeight = txtbold
                 )
             }
             Row(
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
+                modifier = iconsize
             )
             {
                 Text(
                     text = "Be Cautious about your Weight !",
-                    color = Color.DarkGray,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
+                    color = subtxtcol,
+                    fontSize = subtxtsize,
+                    fontWeight = txtbold,
                 )
             }
             Image(

@@ -16,4 +16,4 @@ data class UserDetailDb(
     @ColumnInfo(name = "gender") val gender: String?,
     @ColumnInfo(name = "bloodgrp") val bloodgrp: String?,
     @ColumnInfo(name = "bloodpres") val bloodpres: String?,
-    )
+)

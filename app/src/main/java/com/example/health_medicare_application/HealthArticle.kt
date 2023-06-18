@@ -8,14 +8,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.example.health_medicare_application.ui.theme.fillmaxwid
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,10 +30,7 @@ fun HealthArticlePage(navController: NavController)
 @Composable
 fun HealthNews(h:PaddingValues) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxSize()
-            .background(color = Color.White),
+        modifier = fillmaxwid.fillMaxSize().background(color = Color.White),
     )
     {
         val url = "https://www.medicalnewstoday.com/"
