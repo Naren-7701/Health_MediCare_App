@@ -255,10 +255,6 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                 databaseReference.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         databaseReference.child(usrname.value + "").setValue(userObj);
-                        Toast.makeText(
-                            context, "Registration Successful ",
-                            Toast.LENGTH_LONG
-                        ).show()
                     }
 
                     override fun onCancelled(error: DatabaseError) {

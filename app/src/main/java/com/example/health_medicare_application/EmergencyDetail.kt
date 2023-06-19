@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.fnt20
 import com.example.health_medicare_application.ui.theme.fnt21
+import com.example.health_medicare_application.ui.theme.horzcenter
 import com.example.health_medicare_application.ui.theme.iconsize
 import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.subtxtcol
@@ -274,12 +276,17 @@ fun EmergencyContactPageInfo(h:PaddingValues) {
                 )
             }
         }
-        Text(
-            text = "Contact them whenever Necessary",
-            color = subtxtcol,
-            fontSize = subtxtsize,
-            fontWeight = txtbold,
-        )
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = fillmaxwid
+        ) {
+            Text(
+                text = "Contact them whenever Necessary",
+                color = subtxtcol,
+                fontSize = subtxtsize,
+                fontWeight = txtbold,
+            )
+        }
     }
 }
 fun call(number:Int,context:Context) {

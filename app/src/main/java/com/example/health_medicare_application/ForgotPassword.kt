@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Key
-import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -66,7 +65,6 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
     {
         val email = remember { mutableStateOf(TextFieldValue("")) }
         val usrname = remember { mutableStateOf("") }
-        val mobile = remember { mutableStateOf(TextFieldValue("")) }
         val newpw = remember { mutableStateOf(TextFieldValue("")) }
         val pwvisib = remember { mutableStateOf(false) }
         val otpuser = remember { mutableStateOf(TextFieldValue("")) }
@@ -86,31 +84,22 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
             leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) }
         )
         usrname.value = email.value.text.substringBefore("@")
-        TextField(
-            value = mobile.value,
-            onValueChange = {
-                if (it.text.length <= 10)
-                    mobile.value = it
-            },
-            colors = txtfieldcol,
-            label = { Text("Enter Mobile Number") },
-            modifier = boxes,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-            leadingIcon = { Icon(Icons.Outlined.Phone, contentDescription = null) }
-        )
+        val user = databaseHelper.getUserByUseremail(email.value.text)
         Button(
             onClick = {
                 otpsys.value = otp();
                 val smsManager: SmsManager = SmsManager.getDefault()
-                smsManager.sendTextMessage(
-                    "+91" + mobile.value,
-                    null,
-                    "Password Reset OTP : " + otpsys.value + " - Health Medicare App",
-                    null,
-                    null
-                )
+                if (user != null) {
+                    smsManager.sendTextMessage(
+                        "91"+user.mobile.toString(),
+                        null,
+                        "Password Reset OTP : " + otpsys.value + " - Health Medicare App",
+                        null,
+                        null
+                    )
+                }
                 Toast.makeText(
-                    context, "OTP Sent Sucessfully",
+                    context, "OTP Sent to Registered Mobile Number",
                     Toast.LENGTH_SHORT
                 ).show()
             },
@@ -167,7 +156,7 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
         )
         Button(
             onClick = {
-                if (otpsys.value == otpuser.value.text) {
+                if (otpsys.value == otpuser.value.text && email.value.text.isNotEmpty() && newpw.value.text.isNotEmpty()) {
                     databaseReference.child("" + usrname.value).child("password")
                         .setValue(newpw.value.text);
                     databaseHelper.updatePassword(email.value.text, newpw.value.text);
@@ -178,7 +167,7 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
                     navController.navigate("dashboard/${email.value.text}")
                 } else {
                     Toast.makeText(
-                        context, "Wrong OTP",
+                        context, "Wrong OTP / Fill All the Details",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

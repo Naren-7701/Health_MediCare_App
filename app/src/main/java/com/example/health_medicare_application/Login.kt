@@ -130,6 +130,11 @@ fun LoginFill(h: PaddingValues,context: Context, navController: NavController,da
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                } else {
+                    Toast.makeText(
+                        context, "Please fill All the Details",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             },
             modifier = fillmaxwid,

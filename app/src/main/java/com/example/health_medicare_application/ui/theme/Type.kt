@@ -31,9 +31,6 @@ val Typography = Typography(
     )
 )
 
-val purple673 = Color(0xFF673AB7)
-val purewhite = Color(0xFFFFFFFF)
-
 val Activityscreen = Modifier.fillMaxWidth().fillMaxSize().background(color = Color.White).padding(25.dp)
 val fillmaxwid = Modifier.fillMaxWidth()
 val wid150 = Modifier.width(150.dp)
@@ -51,7 +48,7 @@ val reglogbuttxtcol = Color.White
 val subtxtcol = Color.DarkGray
 
 val reglogbut = 20.sp
-val subtxtsize = 10.sp
+val subtxtsize = 16.sp
 val fnt24 = 24.sp
 val fnt22 = 22.sp
 val fnt21 = 21.sp

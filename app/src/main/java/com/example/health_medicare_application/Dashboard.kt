@@ -1,7 +1,6 @@
 package com.example.health_medicare_application
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,6 +16,7 @@ import androidx.compose.material.icons.outlined.MonitorHeart
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Person4
 import androidx.compose.material.icons.outlined.Scale
+import androidx.compose.material.icons.outlined.Transgender
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.health_medicare_application.ui.theme.Activityscreen
+import com.example.health_medicare_application.ui.theme.Black
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.fnt22
 import com.example.health_medicare_application.ui.theme.fnt24
@@ -36,8 +37,6 @@ import com.example.health_medicare_application.ui.theme.horzcenter
 import com.example.health_medicare_application.ui.theme.horzstart
 import com.example.health_medicare_application.ui.theme.iconsize
 import com.example.health_medicare_application.ui.theme.purple673
-import com.example.health_medicare_application.ui.theme.subtxtcol
-import com.example.health_medicare_application.ui.theme.subtxtsize
 import com.example.health_medicare_application.ui.theme.txtbold
 import com.example.health_medicare_application.ui.theme.vertspace
 
@@ -124,9 +123,10 @@ fun DashboardContent(h: PaddingValues,databaseHelper: UserDatabaseHelper,email:S
                         modifier = iconsize
                     )
                 } else {
-                    Image(
-                        painter = painterResource(id = R.drawable.tg),
+                    Icon(
+                        imageVector = Icons.Outlined.Transgender,
                         contentDescription = "Transgender",
+                        tint = Black,
                         modifier = iconsize
                     )
                 }
@@ -227,18 +227,6 @@ fun DashboardContent(h: PaddingValues,databaseHelper: UserDatabaseHelper,email:S
                 Text(
                     text = user.bloodpres.toString(), fontSize = 21.sp,
                     fontWeight = txtbold
-                )
-            }
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = iconsize
-            )
-            {
-                Text(
-                    text = "Be Cautious about your Weight !",
-                    color = subtxtcol,
-                    fontSize = subtxtsize,
-                    fontWeight = txtbold,
                 )
             }
             Image(
