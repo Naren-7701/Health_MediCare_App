@@ -52,13 +52,9 @@ import com.example.health_medicare_application.ui.theme.boxes
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.fnt20
 import com.example.health_medicare_application.ui.theme.horzcenter
-import com.example.health_medicare_application.ui.theme.horzspacear
 import com.example.health_medicare_application.ui.theme.purewhite
 import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.rcshape
-import com.example.health_medicare_application.ui.theme.subtxtcol
-import com.example.health_medicare_application.ui.theme.subtxtsize
-import com.example.health_medicare_application.ui.theme.txtbold
 import com.example.health_medicare_application.ui.theme.vertspace
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -206,19 +202,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
         blg = bloodGroup()
         gen = gender()
         Row(
-            horizontalArrangement = Arrangement.Start,
-            modifier = fillmaxwid
-        )
-        {
-            Text(
-                text = "Enter Blood Pressure",
-                color = subtxtcol,
-                fontSize = subtxtsize,
-                fontWeight = txtbold
-            )
-        }
-        Row(
-            horizontalArrangement = horzspacear,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = fillmaxwid
         )
         {
@@ -228,8 +212,8 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                     systolbp.value = it
                 },
                 colors = txtfieldcol,
-                placeholder = { Text("Systol") },
-                modifier = Modifier.width(100.dp).border(BorderStroke(2.dp, purple673)),
+                placeholder = { Text("BP (Systol)") },
+                modifier = Modifier.width(130.dp).border(BorderStroke(2.dp, purple673)),
                 keyboardOptions = mobkeypad,
             )
             TextField(
@@ -238,8 +222,8 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                     diastolbp.value = it
                 },
                 colors = txtfieldcol,
-                placeholder = { Text("Diastol") },
-                modifier = Modifier.width(100.dp).border(BorderStroke(2.dp, purple673)),
+                placeholder = { Text("BP (Diastol)") },
+                modifier = Modifier.width(130.dp).border(BorderStroke(2.dp, purple673)),
                 keyboardOptions = mobkeypad,
             )
         }
@@ -250,7 +234,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                         email.value.text,
                         mobile.value.text,
                         regpw.value.text,
-                        name.value.text
+                        name.value.text,
                     )
                 databaseReference.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {

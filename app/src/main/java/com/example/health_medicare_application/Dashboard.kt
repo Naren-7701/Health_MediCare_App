@@ -40,9 +40,10 @@ import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.txtbold
 import com.example.health_medicare_application.ui.theme.vertspace
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardPage(navController: NavController,databaseHelper: UserDatabaseHelper,email:String?)
+fun DashboardPage(navController: NavController, databaseHelper: UserDatabaseHelper, email:String?)
 {
     Scaffold(
         topBar = { TopBar("DASHBOARD") },
@@ -232,7 +233,9 @@ fun DashboardContent(h: PaddingValues,databaseHelper: UserDatabaseHelper,email:S
             Image(
                 painter = painterResource(id = R.drawable.bmi_chart),
                 contentDescription = "BMI",
-                modifier = Modifier.width(400.dp).height(200.dp)
+                modifier = Modifier
+                    .width(400.dp)
+                    .height(200.dp)
             )
         }
     }
