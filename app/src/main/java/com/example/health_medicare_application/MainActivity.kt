@@ -102,10 +102,10 @@ fun App(context:Context,databaseReference: DatabaseReference,databaseHelper: Use
             CaloriePage(navController)
         }
         composable("docsearch") {
-            //UserDetailPage(navController)
+            Doctor(navController,databaseHelper)
         }
         composable("medsearch") {
-            //UserDetailPage(navController)
+            Medicine(navController,databaseHelper)
         }
         composable("article") {
             HealthArticlePage(navController)
