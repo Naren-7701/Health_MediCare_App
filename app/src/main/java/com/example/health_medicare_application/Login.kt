@@ -70,7 +70,7 @@ fun LoginFill(h: PaddingValues,context: Context, navController: NavController,da
         val boxcolor = TextFieldDefaults.textFieldColors(containerColor = Color.White)
         val butcolor = ButtonDefaults.buttonColors(Color(0xFF673AB7))
         Image(
-            painter = painterResource(id = R.drawable.naren_logo),
+            painter = painterResource(id = R.drawable.health_medicare_app),
             contentDescription = "Logo",
             modifier = Modifier.size(175.dp).padding(top = 25.dp)
         )
