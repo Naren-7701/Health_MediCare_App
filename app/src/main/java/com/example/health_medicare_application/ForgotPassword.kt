@@ -96,21 +96,28 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
         val user = databaseHelper.getUserByUseremail(email.value.text)
         Button(
             onClick = {
-                otpsys.value = otp();
-                val smsManager: SmsManager = SmsManager.getDefault()
-                if (user != null) {
-                    smsManager.sendTextMessage(
-                        "91"+user.mobile.toString(),
-                        null,
-                        "Password Reset OTP : " + otpsys.value + " - Health Medicare App",
-                        null,
-                        null
-                    )
+                if (email.value.text.isNotEmpty()) {
+                    otpsys.value = otp();
+                    val smsManager: SmsManager = SmsManager.getDefault()
+                    if (user != null) {
+                        smsManager.sendTextMessage(
+                            "91" + user.mobile.toString(),
+                            null,
+                            "Password Reset OTP : " + otpsys.value + " - Health Medicare App",
+                            null,
+                            null
+                        )
+                    }
+                    Toast.makeText(
+                        context, "OTP Sent to Registered Mobile Number",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context, "Please enter Email Address",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                Toast.makeText(
-                    context, "OTP Sent to Registered Mobile Number",
-                    Toast.LENGTH_SHORT
-                ).show()
             },
             modifier = fillmaxwid,
             colors = ButtonDefaults.buttonColors(purple673),
