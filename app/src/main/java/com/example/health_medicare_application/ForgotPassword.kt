@@ -114,7 +114,7 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
                     ).show()
                 } else {
                     Toast.makeText(
-                        context, "Please enter Email Address",
+                        context, "Please Enter Email Address",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
