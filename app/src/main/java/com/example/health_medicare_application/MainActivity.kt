@@ -38,11 +38,21 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.health_medicare_application.model.UserDatabaseHelper
 import com.example.health_medicare_application.ui.theme.Health_MediCare_ApplicationTheme
 import com.example.health_medicare_application.ui.theme.horzspacear
 import com.example.health_medicare_application.ui.theme.purewhite
 import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.txtbold
+import com.example.health_medicare_application.uiactivity.CaloriePage
+import com.example.health_medicare_application.uiactivity.DashboardPage
+import com.example.health_medicare_application.uiactivity.Doctor
+import com.example.health_medicare_application.uiactivity.EmergencyContactPage
+import com.example.health_medicare_application.uiactivity.ForgotPasswordPage
+import com.example.health_medicare_application.uiactivity.HealthArticlePage
+import com.example.health_medicare_application.uiactivity.LoginPage
+import com.example.health_medicare_application.uiactivity.Medicine
+import com.example.health_medicare_application.uiactivity.RegistrationPage
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 

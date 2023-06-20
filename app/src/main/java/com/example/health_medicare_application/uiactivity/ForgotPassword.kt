@@ -1,4 +1,4 @@
-package com.example.health_medicare_application
+package com.example.health_medicare_application.uiactivity
 
 import android.content.Context
 import android.telephony.SmsManager
@@ -37,6 +37,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.health_medicare_application.R
+import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.model.UserDatabaseHelper
 import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.boxes
 import com.example.health_medicare_application.ui.theme.fillmaxwid

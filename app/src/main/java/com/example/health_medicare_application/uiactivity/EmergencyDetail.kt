@@ -1,4 +1,4 @@
-package com.example.health_medicare_application
+package com.example.health_medicare_application.uiactivity
 
 import android.content.Context
 import android.content.Intent
@@ -22,11 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.health_medicare_application.BottomBar
+import com.example.health_medicare_application.TopBar
 import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.fnt20
 import com.example.health_medicare_application.ui.theme.fnt21
-import com.example.health_medicare_application.ui.theme.horzcenter
 import com.example.health_medicare_application.ui.theme.iconsize
 import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.subtxtcol
@@ -42,7 +43,7 @@ fun EmergencyContactPage(navController: NavController)
     Scaffold(
         topBar = { TopBar("EMERGENCY DIAL") },
         content = {pad -> EmergencyContactPageInfo(pad) },
-        bottomBar = { BottomBar(navController)}
+        bottomBar = { BottomBar(navController) }
     )
 }
 @Composable

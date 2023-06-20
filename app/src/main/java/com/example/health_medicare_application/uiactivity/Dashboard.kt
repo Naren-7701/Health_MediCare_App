@@ -1,4 +1,4 @@
-package com.example.health_medicare_application
+package com.example.health_medicare_application.uiactivity
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -28,6 +28,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.health_medicare_application.BottomBar
+import com.example.health_medicare_application.R
+import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.model.UserDatabaseHelper
 import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.Black
 import com.example.health_medicare_application.ui.theme.fillmaxwid
@@ -48,11 +52,11 @@ fun DashboardPage(navController: NavController, databaseHelper: UserDatabaseHelp
     Scaffold(
         topBar = { TopBar("DASHBOARD") },
         content = {pad -> DashboardContent(pad,databaseHelper,email) },
-        bottomBar = { BottomBar(navController)}
+        bottomBar = { BottomBar(navController) }
     )
 }
 @Composable
-fun DashboardContent(h: PaddingValues,databaseHelper: UserDatabaseHelper,email:String?) {
+fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email:String?) {
     val sp5 = Modifier.padding(5.dp)
     val user = databaseHelper.getUserByUseremail(email.toString())
     if (user != null) {

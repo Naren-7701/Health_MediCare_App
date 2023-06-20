@@ -1,4 +1,4 @@
-package com.example.health_medicare_application
+package com.example.health_medicare_application.uiactivity
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,6 +7,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.navigation.NavController
+import com.example.health_medicare_application.BottomBar
+import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.model.UserDatabaseHelper
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.vertspace
 
@@ -17,7 +20,7 @@ fun Doctor(navController: NavController, databaseHelper: UserDatabaseHelper,/* e
     Scaffold(
         topBar = { TopBar("DOCTOR SEARCH") },
         content = {pad -> DoctorSearch(pad,databaseHelper) },
-        bottomBar = { BottomBar(navController)}
+        bottomBar = { BottomBar(navController) }
     )
 }
 @Composable

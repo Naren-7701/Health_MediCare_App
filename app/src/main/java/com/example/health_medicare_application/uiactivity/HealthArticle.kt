@@ -1,4 +1,4 @@
-package com.example.health_medicare_application
+package com.example.health_medicare_application.uiactivity
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.example.health_medicare_application.BottomBar
+import com.example.health_medicare_application.TopBar
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +25,7 @@ fun HealthArticlePage(navController: NavController)
     Scaffold(
         topBar = { TopBar("HEALTH ARTICLE") },
         content = {pad -> HealthNews(pad) },
-        bottomBar = { BottomBar(navController)}
+        bottomBar = { BottomBar(navController) }
     )
 }
 @SuppressLint("SetJavaScriptEnabled")

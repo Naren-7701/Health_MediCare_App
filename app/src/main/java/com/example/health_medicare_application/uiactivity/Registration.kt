@@ -1,4 +1,4 @@
-package com.example.health_medicare_application
+package com.example.health_medicare_application.uiactivity
 
 import android.content.Context
 import android.widget.Toast
@@ -47,6 +47,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.model.UserDatabaseHelper
+import com.example.health_medicare_application.model.UserDetailDb
+import com.example.health_medicare_application.model.UserObject
 import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.boxes
 import com.example.health_medicare_application.ui.theme.fillmaxwid

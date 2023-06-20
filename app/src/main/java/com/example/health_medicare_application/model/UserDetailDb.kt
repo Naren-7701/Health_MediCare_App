@@ -1,4 +1,4 @@
-package com.example.health_medicare_application
+package com.example.health_medicare_application.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

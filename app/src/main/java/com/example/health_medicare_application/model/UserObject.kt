@@ -1,4 +1,4 @@
-package com.example.health_medicare_application
+package com.example.health_medicare_application.model
 
 data class UserObject(
     var userEmail: String,
