@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Bloodtype
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Call
+import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.MonitorHeart
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Person4
@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.health_medicare_application.BottomBar
 import com.example.health_medicare_application.R
@@ -67,9 +66,14 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
         )
         {
             val bmi = user.bmi
+            Image(
+                painter = painterResource(id = R.drawable.health_medicare_app),
+                contentDescription = "Logo",
+                modifier = Modifier.size(150.dp)
+            )
             Row(
                 horizontalArrangement = horzstart,
-                modifier = fillmaxwid.padding(top = 30.dp)
+                modifier = fillmaxwid
             )
             {
                 Icon(
@@ -144,7 +148,7 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = user.age.toString(), fontSize = fnt22,
+                    text = user.age.toString(), fontSize = fnt24,
                     fontWeight = txtbold
                 )
                 Spacer(modifier = sp5)
@@ -157,7 +161,7 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 Spacer(modifier = sp5)
                 Text(
                     text = user.bloodgrp.toString(),
-                    fontSize = fnt22,
+                    fontSize = fnt24,
                     fontWeight = txtbold
                 )
             }
@@ -168,13 +172,13 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
             {
                 Icon(
                     imageVector = Icons.Outlined.Scale,
-                    contentDescription = "Sex",
+                    contentDescription = "Bmi",
                     tint = purple673,
                     modifier = iconsize
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = bmi.toString(), fontSize = fnt22,
+                    text = bmi.toString(), fontSize = fnt24,
                     fontWeight = txtbold
                 )
                 Spacer(modifier = sp5)
@@ -183,35 +187,35 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                         Text(
                             text = "(UNDER-WEIGHT)",
                             color = Color(0xFF3F51B5),
-                            fontSize = fnt22,
+                            fontSize = fnt24,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 18.5..24.9) {
                         Text(
                             text = "(NORMAL)",
                             color = Color(0xFF028B7F),
-                            fontSize = fnt22,
+                            fontSize = fnt24,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 25.0..29.9) {
                         Text(
                             text = "(OVER-WEIGHT)",
                             color = Color(0xFFB8A81E),
-                            fontSize = fnt22,
+                            fontSize = fnt24,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 30.0..34.9) {
                         Text(
                             text = "(OBESE)",
                             color = Color(0xFFFF9800),
-                            fontSize = fnt22,
+                            fontSize = fnt24,
                             fontWeight = txtbold
                         )
                     } else {
                         Text(
                             text = "(EXTREMELY OBESE)",
                             color = Color.Red,
-                            fontSize = fnt22,
+                            fontSize = fnt24,
                             fontWeight = txtbold
                         )
                     }
@@ -230,17 +234,10 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = user.bloodpres.toString(), fontSize = 21.sp,
+                    text = user.bloodpres.toString(), fontSize = fnt24,
                     fontWeight = txtbold
                 )
             }
-            Image(
-                painter = painterResource(id = R.drawable.bmi_chart),
-                contentDescription = "BMI",
-                modifier = Modifier
-                    .width(400.dp)
-                    .height(200.dp)
-            )
         }
     }
 }

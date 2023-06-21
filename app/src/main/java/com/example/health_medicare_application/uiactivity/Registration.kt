@@ -3,7 +3,6 @@ package com.example.health_medicare_application.uiactivity
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,13 +18,9 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material.icons.outlined.WaterDrop
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.RadioButton
@@ -56,6 +51,7 @@ import com.example.health_medicare_application.ui.theme.boxes
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.fnt20
 import com.example.health_medicare_application.ui.theme.horzcenter
+import com.example.health_medicare_application.ui.theme.mobkeypad
 import com.example.health_medicare_application.ui.theme.purewhite
 import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.rcshape
@@ -93,11 +89,11 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
         val weight = remember { mutableStateOf(TextFieldValue("")) }
         val age = remember { mutableStateOf(TextFieldValue("")) }
         var gen by remember { mutableStateOf("") }
-        var blg by remember { mutableStateOf("") }
+        val groups = listOf("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
+        val blg = remember { mutableStateOf(0)}
         val systolbp = remember { mutableStateOf(TextFieldValue("")) }
         val diastolbp = remember { mutableStateOf(TextFieldValue("")) }
         val txtfieldcol = TextFieldDefaults.textFieldColors(containerColor = Color.White)
-        val mobkeypad = KeyboardOptions(keyboardType = KeyboardType.Phone)
         TextField(
             value = email.value,
             onValueChange = {
@@ -203,7 +199,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                 keyboardOptions = mobkeypad,
             )
         }
-        blg = bloodGroup()
+        blg.value = dropselector(groups, "Select Blood Group")
         gen = gender()
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -262,7 +258,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
                         bmi = (weight.value.text.toFloat() * 10000 / (height.value.text.toFloat() * height.value.text.toFloat())).toInt(),
                         age = age.value.text,
                         gender = gen,
-                        bloodgrp = blg,
+                        bloodgrp = groups.get(blg.value),
                         bloodpres = systolbp.value.text + " / " + diastolbp.value.text
                     )
                     databaseHelper.insertUser(user)
@@ -288,7 +284,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
 @Composable
 fun gender():String {
     val sex = listOf("Male", "Female", "Other")
-    val (selected, onOptionSelected) = remember { mutableStateOf(sex[2])}
+    val (selected, onOptionSelected) = remember { mutableStateOf(sex[2]) }
     Row {
         sex.forEach { text ->
             Row(
@@ -311,41 +307,4 @@ fun gender():String {
         }
     }
     return selected
-}
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun bloodGroup():String {
-    var isexpand by remember { mutableStateOf(false) }
-    var blgrp by remember { mutableStateOf("") }
-    val groups = listOf("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
-    ExposedDropdownMenuBox(expanded = isexpand,
-        onExpandedChange = { isexpand = it })
-    {
-        TextField(
-            value = blgrp,
-            onValueChange = {},
-            readOnly = true,
-            leadingIcon = { Icon(Icons.Outlined.WaterDrop, contentDescription = null) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isexpand) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(containerColor = purewhite),
-            modifier = fillmaxwid.menuAnchor().border(BorderStroke(2.dp, purple673)),
-            placeholder = { Text(text = "Select Blood Group") },
-        )
-        ExposedDropdownMenu(
-            expanded = isexpand,
-            onDismissRequest = { isexpand = false },
-            modifier = Modifier.background(color = purewhite)
-        )
-        {
-            groups.forEach { bloodgroups ->
-                DropdownMenuItem(
-                    text = { Text(text = bloodgroups) },
-                    onClick = {
-                        blgrp = bloodgroups
-                        isexpand = false
-                    })
-            }
-        }
-    }
-    return blgrp
 }

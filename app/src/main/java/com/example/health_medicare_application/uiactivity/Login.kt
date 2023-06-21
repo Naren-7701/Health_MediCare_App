@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -40,6 +39,8 @@ import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.boxes
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.horzcenter
+import com.example.health_medicare_application.ui.theme.purewhite
+import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.rcshape
 import com.example.health_medicare_application.ui.theme.reglogbut
 import com.example.health_medicare_application.ui.theme.reglogbuttxtcol
@@ -70,8 +71,8 @@ fun LoginFill(h: PaddingValues,context: Context, navController: NavController,da
         val mail = remember { mutableStateOf(TextFieldValue("")) }
         val pw = remember { mutableStateOf(TextFieldValue("")) }
         val pwvisib = remember { mutableStateOf(false) }
-        val boxcolor = TextFieldDefaults.textFieldColors(containerColor = Color.White)
-        val butcolor = ButtonDefaults.buttonColors(Color(0xFF673AB7))
+        val boxcolor = TextFieldDefaults.textFieldColors(containerColor = purewhite)
+        val butcolor = ButtonDefaults.buttonColors(purple673)
         Image(
             painter = painterResource(id = R.drawable.health_medicare_app),
             contentDescription = "Logo",

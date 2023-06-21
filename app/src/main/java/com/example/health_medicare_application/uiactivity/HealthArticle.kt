@@ -35,7 +35,7 @@ fun HealthNews(h:PaddingValues) {
         modifier = fillmaxwid.fillMaxSize().background(color = Color.White),
     )
     {
-        val url = "https://www.medicalnewstoday.com/"
+        val url = "https://www.medicalnewstoday.com/news"
         AndroidView(factory = {
             WebView(it).apply {
                 layoutParams = ViewGroup.LayoutParams(
