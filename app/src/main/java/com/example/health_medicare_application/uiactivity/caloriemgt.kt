@@ -175,7 +175,8 @@ fun Calorie(h: PaddingValues) {
                 )
             }
         }
-        if (enable.value && ht.value.text.isNotEmpty() && wt.value.text.isNotEmpty() && age.value.text.isNotEmpty()) {
+        if (enable.value && ht.value.text.isNotEmpty() && wt.value.text.isNotEmpty() &&
+            age.value.text.isNotEmpty() && actindex.value >= 0 && dietindex.value >=0) {
             Row(
                 horizontalArrangement = vertspace,
                 modifier = fillmaxwid.padding(top = 35.dp),
