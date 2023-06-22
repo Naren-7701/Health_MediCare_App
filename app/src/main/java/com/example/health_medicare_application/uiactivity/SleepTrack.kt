@@ -187,7 +187,7 @@ fun SleepTracker(h:PaddingValues) {
                     text = "Sleep Duration : " + formatTime(stop - start),
                     fontSize = fnt21,
                     fontWeight = txtbold,
-                    color = Black
+                    color = Color.Blue
                 )
             }
         }

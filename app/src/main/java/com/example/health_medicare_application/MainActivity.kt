@@ -19,10 +19,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Bedtime
-import androidx.compose.material.icons.filled.ContactEmergency
-import androidx.compose.material.icons.filled.MedicalServices
+import androidx.compose.material.icons.filled.Contacts
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.outlined.Logout
-import androidx.compose.material.icons.outlined.PieChartOutline
+import androidx.compose.material.icons.outlined.RiceBowl
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -63,6 +63,7 @@ import com.example.health_medicare_application.uiactivity.EmergencyContactPage
 import com.example.health_medicare_application.uiactivity.ForgotPasswordPage
 import com.example.health_medicare_application.uiactivity.HealthArticlePage
 import com.example.health_medicare_application.uiactivity.LoginPage
+import com.example.health_medicare_application.uiactivity.MapPage
 import com.example.health_medicare_application.uiactivity.MedicalRegPage
 import com.example.health_medicare_application.uiactivity.RegistrationPage
 import com.example.health_medicare_application.uiactivity.SleepTrackerPage
@@ -131,8 +132,11 @@ fun App(context:Context,databaseReference: DatabaseReference,databaseHelper1: Us
         composable("caloriemgt") {
             CaloriePage(navController)
         }
-        composable("article"){
+        composable("article") {
             HealthArticlePage(navController)
+        }
+        composable("maps"){
+            MapPage(navController)
         }
         composable("sleep"){
             SleepTrackerPage(navController)
@@ -239,7 +243,7 @@ fun BottomBar(navController: NavController) {
             colors = butcolor,
         ) {
             Icon(
-                imageVector = Icons.Outlined.PieChartOutline,
+                imageVector = Icons.Outlined.RiceBowl,
                 contentDescription = "Calorie",
                 modifier = size24
             )
@@ -265,12 +269,12 @@ fun BottomBar(navController: NavController) {
             )
         }
         Button(
-            onClick = { navController.navigate("medsearch") },
+            onClick = { navController.navigate("maps") },
             colors = butcolor,
         ) {
             Icon(
-                imageVector = Icons.Filled.MedicalServices,
-                contentDescription = "Medicine",
+                imageVector = Icons.Filled.LocationOn,
+                contentDescription = "Map",
                 modifier = size24
             )
         }
@@ -279,7 +283,7 @@ fun BottomBar(navController: NavController) {
             colors = butcolor,
         ) {
             Icon(
-                imageVector = Icons.Filled.ContactEmergency,
+                imageVector = Icons.Filled.Contacts,
                 contentDescription = "Emergency",
                 modifier = size24
             )
