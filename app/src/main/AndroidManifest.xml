@@ -20,6 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Health_MediCare_Application"
         tools:targetApi="31">
+        <service
+            android:name=".FCMService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                    <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                </intent-filter>
+        </service>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
