@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.health_medicare_application.BottomBar
-import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.TopApplicationBar
 import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.fnt20
@@ -41,7 +41,7 @@ import com.example.health_medicare_application.ui.theme.wid150
 fun EmergencyContactPage(navController: NavController)
 {
     Scaffold(
-        topBar = { TopBar("EMERGENCY DIAL") },
+        topBar = { TopApplicationBar(abc = "EMERGENCY DIAL",navController) },
         content = {pad -> EmergencyContactPageInfo(pad) },
         bottomBar = { BottomBar(navController) }
     )

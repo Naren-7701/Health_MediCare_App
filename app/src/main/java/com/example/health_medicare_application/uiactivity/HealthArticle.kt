@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.health_medicare_application.BottomBar
-import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.TopApplicationBar
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +23,7 @@ import com.example.health_medicare_application.ui.theme.fillmaxwid
 fun HealthArticlePage(navController: NavController)
 {
     Scaffold(
-        topBar = { TopBar("HEALTH ARTICLE") },
+        topBar = { TopApplicationBar("HEALTH ARTICLE",navController) },
         content = {pad -> HealthNews(pad) },
         bottomBar = { BottomBar(navController) }
     )

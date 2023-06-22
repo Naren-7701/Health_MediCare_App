@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.health_medicare_application.BottomBar
 import com.example.health_medicare_application.R
-import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.TopApplicationBar
 import com.example.health_medicare_application.model.MedicalDatabaseHelper
 import com.example.health_medicare_application.model.UserDatabaseHelper
 import com.example.health_medicare_application.ui.theme.Activityscreen
@@ -54,7 +54,7 @@ fun DashboardPage(navController: NavController, email: String, databaseHelper1: 
 )
 {
     Scaffold(
-        topBar = { TopBar("DASHBOARD") },
+        topBar = { TopApplicationBar("DASHBOARD",navController) },
         content = {pad -> DashboardContent(pad, databaseHelper1, databaseHelper2, email) },
         bottomBar = { BottomBar(navController) }
     )

@@ -46,7 +46,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.health_medicare_application.BottomBar
-import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.TopApplicationBar
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.fnt18
 import com.example.health_medicare_application.ui.theme.fnt19
@@ -70,7 +70,7 @@ import com.example.health_medicare_application.ui.theme.wid220
 fun CaloriePage(navController: NavController)
 {
     Scaffold(
-        topBar = { TopBar("CALORIE MANAGE") },
+        topBar = { TopApplicationBar("CALORIE MANAGE",navController) },
         content = {pad -> Calorie(pad) },
         bottomBar = { BottomBar(navController) }
     )
