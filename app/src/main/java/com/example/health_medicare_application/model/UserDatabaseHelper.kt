@@ -20,11 +20,6 @@ class UserDatabaseHelper(context: Context) :
         private const val COLUMN_MOBILE = "mobile"
         private const val COLUMN_PASSWORD = "password"
         private const val COLUMN_NAME = "name"
-        private const val COLUMN_BMI = "bmi"
-        private const val COLUMN_AGE = "age"
-        private const val COLUMN_GENDER = "gender"
-        private const val COLUMN_BLOODGRP = "bloodgrp"
-        private const val COLUMN_BLOODPRES = "bloodpres"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -33,14 +28,22 @@ class UserDatabaseHelper(context: Context) :
                 "$COLUMN_EMAIL TEXT, " +
                 "$COLUMN_MOBILE TEXT, " +
                 "$COLUMN_PASSWORD TEXT, " +
-                "$COLUMN_NAME TEXT, " +
-                "$COLUMN_BMI INT, " +
-                "$COLUMN_AGE TEXT, " +
-                "$COLUMN_GENDER TEXT, " +
-                "$COLUMN_BLOODGRP TEXT, " +
-                "$COLUMN_BLOODPRES TEXT " +
+                "$COLUMN_NAME TEXT " +
                 ")"
         db?.execSQL(createTable)
+
+        val createTable1 = "CREATE TABLE ${MedicalDatabaseHelper.TABLE_NAME} (" +
+                "${MedicalDatabaseHelper.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "${MedicalDatabaseHelper.COLUMN_EMAIL} TEXT, " +
+                "${MedicalDatabaseHelper.COLUMN_LOCATION} TEXT, " +
+                "${MedicalDatabaseHelper.COLUMN_BMI} INT, " +
+                "${MedicalDatabaseHelper.COLUMN_AGE} TEXT, " +
+                "${MedicalDatabaseHelper.COLUMN_GENDER} TEXT, " +
+                "${MedicalDatabaseHelper.COLUMN_BLOODGRP} TEXT, " +
+                "${MedicalDatabaseHelper.COLUMN_BLOODPRES} TEXT, " +
+                "${MedicalDatabaseHelper.COLUMN_CATEGORY} TEXT " +
+                ")"
+        db?.execSQL(createTable1)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -55,11 +58,6 @@ class UserDatabaseHelper(context: Context) :
         values.put(COLUMN_MOBILE, user.mobile)
         values.put(COLUMN_PASSWORD, user.password)
         values.put(COLUMN_NAME, user.name)
-        values.put(COLUMN_BMI, user.bmi)
-        values.put(COLUMN_AGE, user.age)
-        values.put(COLUMN_GENDER, user.gender)
-        values.put(COLUMN_BLOODGRP, user.bloodgrp)
-        values.put(COLUMN_BLOODPRES, user.bloodpres)
         db.insert(TABLE_NAME, null, values)
         db.close()
     }
@@ -77,11 +75,6 @@ class UserDatabaseHelper(context: Context) :
                 mobile = cursor.getString(cursor.getColumnIndex(COLUMN_MOBILE)),
                 password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD)),
                 name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
-                bmi = cursor.getInt(cursor.getColumnIndex(COLUMN_BMI)),
-                age = cursor.getString(cursor.getColumnIndex(COLUMN_AGE)),
-                gender = cursor.getString(cursor.getColumnIndex(COLUMN_GENDER)),
-                bloodgrp = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODGRP)),
-                bloodpres = cursor.getString(cursor.getColumnIndex(COLUMN_BLOODPRES)),
             )
         }
         cursor.close()

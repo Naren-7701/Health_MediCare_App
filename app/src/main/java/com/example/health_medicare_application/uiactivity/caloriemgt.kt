@@ -16,9 +16,12 @@ import androidx.compose.material.icons.outlined.Egg
 import androidx.compose.material.icons.outlined.LocalPizza
 import androidx.compose.material.icons.outlined.MonitorWeight
 import androidx.compose.material.icons.outlined.NordicWalking
+import androidx.compose.material.icons.outlined.Person4
 import androidx.compose.material.icons.outlined.Power
 import androidx.compose.material.icons.outlined.RiceBowl
 import androidx.compose.material.icons.outlined.Scale
+import androidx.compose.material.icons.outlined.SetMeal
+import androidx.compose.material.icons.outlined.SportsGymnastics
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -38,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -152,14 +156,21 @@ fun Calorie(h: PaddingValues) {
                     keyboardOptions = mobkeypad,
                 )
             }
-            genindex.value = dropselector(gender, "Select Gender")
+            genindex.value =
+                dropselector(Icons.Outlined.Person4, gender, "Select Gender", fillmaxwid)
             if (genindex.value == 0) {
                 extra.value = 5
             } else {
                 extra.value = -161
             }
-            actindex.value = dropselector(activities, "Select Activity Type")
-            dietindex.value = dropselector(diettype, "Select Diet Type")
+            actindex.value = dropselector(
+                Icons.Outlined.SportsGymnastics,
+                activities,
+                "Select Activity Type",
+                fillmaxwid
+            )
+            dietindex.value =
+                dropselector(Icons.Outlined.SetMeal, diettype, "Select Diet Type", fillmaxwid)
             Button(
                 onClick = { enable.value = true },
                 modifier = fillmaxwid,
@@ -176,7 +187,8 @@ fun Calorie(h: PaddingValues) {
             }
         }
         if (enable.value && ht.value.text.isNotEmpty() && wt.value.text.isNotEmpty() &&
-            age.value.text.isNotEmpty() && actindex.value >= 0 && dietindex.value >=0) {
+            age.value.text.isNotEmpty() && actindex.value >= 0 && dietindex.value >= 0
+        ) {
             Row(
                 horizontalArrangement = vertspace,
                 modifier = fillmaxwid.padding(top = 35.dp),
@@ -446,7 +458,7 @@ fun Calorie(h: PaddingValues) {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun dropselector(options:List<String>, plchold: String):Int {
+fun dropselector(icon: ImageVector, options:List<String>, plchold: String, wid: Modifier):Int {
     var isexpand by remember { mutableStateOf(false) }
     var answer by remember { mutableStateOf("") }
     ExposedDropdownMenuBox(expanded = isexpand,
@@ -458,8 +470,7 @@ fun dropselector(options:List<String>, plchold: String):Int {
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isexpand) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(containerColor = purewhite),
-            modifier = fillmaxwid
-                .menuAnchor()
+            modifier = wid.menuAnchor()
                 .border(BorderStroke(2.dp, purple673)),
             placeholder = { Text(text = plchold) },
         )

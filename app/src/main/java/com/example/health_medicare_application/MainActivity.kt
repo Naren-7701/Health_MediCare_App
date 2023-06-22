@@ -38,6 +38,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.health_medicare_application.model.MedicalDatabaseHelper
 import com.example.health_medicare_application.model.UserDatabaseHelper
 import com.example.health_medicare_application.ui.theme.Health_MediCare_ApplicationTheme
 import com.example.health_medicare_application.ui.theme.horzspacear
@@ -51,16 +52,19 @@ import com.example.health_medicare_application.uiactivity.EmergencyContactPage
 import com.example.health_medicare_application.uiactivity.ForgotPasswordPage
 import com.example.health_medicare_application.uiactivity.HealthArticlePage
 import com.example.health_medicare_application.uiactivity.LoginPage
+import com.example.health_medicare_application.uiactivity.MedicalRegPage
 import com.example.health_medicare_application.uiactivity.Medicine
 import com.example.health_medicare_application.uiactivity.RegistrationPage
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : ComponentActivity() {
-    private lateinit var databaseHelper: UserDatabaseHelper
+    private lateinit var databaseHelper1: UserDatabaseHelper
+    private lateinit var databaseHelper2: MedicalDatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        databaseHelper = UserDatabaseHelper(this)
+        databaseHelper1 = UserDatabaseHelper(this)
+        databaseHelper2 = MedicalDatabaseHelper(this)
         setContent {
             Health_MediCare_ApplicationTheme {
                 Surface(
@@ -81,41 +85,38 @@ class MainActivity : ComponentActivity() {
                     SideEffect {
                         get_permission.launch(Manifest.permission.SEND_SMS)
                     }
-                    App(applicationContext,reference,databaseHelper)
+                    App(applicationContext,reference,databaseHelper1,databaseHelper2)
                 }
             }
         }
     }
 }
 @Composable
-fun App(context:Context,databaseReference: DatabaseReference,databaseHelper: UserDatabaseHelper) {
+fun App(context:Context,databaseReference: DatabaseReference,databaseHelper1: UserDatabaseHelper,databaseHelper2: MedicalDatabaseHelper) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = "login"
     ) {
         composable("reg") {
-            RegistrationPage(context,navController,databaseReference,databaseHelper)
+            RegistrationPage(context,navController,databaseReference,databaseHelper1)
+        }
+        composable("medusreg") {
+            MedicalRegPage(context,navController,databaseHelper2)
         }
         composable("login") {
-            LoginPage(context,navController,databaseHelper)
+            LoginPage(context,navController,databaseHelper1)
         }
         composable("forgotpw") {
-            ForgotPasswordPage(context,navController,databaseReference,databaseHelper)
+            ForgotPasswordPage(context,navController,databaseReference,databaseHelper1)
         }
         composable("dashboard/{email}") {
                 backStackEntry ->
             val email = backStackEntry.arguments?.getString("email")
-            DashboardPage(navController,databaseHelper,email)
+            DashboardPage(context,navController,email.toString(),databaseHelper1,databaseHelper2)
         }
         composable("caloriemgt") {
             CaloriePage(navController)
-        }
-        composable("docsearch") {
-            Doctor(navController,databaseHelper)
-        }
-        composable("medsearch") {
-            Medicine(navController,databaseHelper)
         }
         composable("article") {
             HealthArticlePage(navController)

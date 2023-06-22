@@ -1,5 +1,7 @@
 package com.example.health_medicare_application.uiactivity
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,7 +13,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Bloodtype
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Call
-import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.outlined.MedicalServices
 import androidx.compose.material.icons.outlined.MonitorHeart
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Person4
@@ -30,12 +33,12 @@ import androidx.navigation.NavController
 import com.example.health_medicare_application.BottomBar
 import com.example.health_medicare_application.R
 import com.example.health_medicare_application.TopBar
+import com.example.health_medicare_application.model.MedicalDatabaseHelper
 import com.example.health_medicare_application.model.UserDatabaseHelper
 import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.Black
 import com.example.health_medicare_application.ui.theme.fillmaxwid
-import com.example.health_medicare_application.ui.theme.fnt22
-import com.example.health_medicare_application.ui.theme.fnt24
+import com.example.health_medicare_application.ui.theme.fnt23
 import com.example.health_medicare_application.ui.theme.horzcenter
 import com.example.health_medicare_application.ui.theme.horzstart
 import com.example.health_medicare_application.ui.theme.iconsize
@@ -46,30 +49,31 @@ import com.example.health_medicare_application.ui.theme.vertspace
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardPage(navController: NavController, databaseHelper: UserDatabaseHelper, email:String?)
+fun DashboardPage(context: Context, navController: NavController, email:String,databaseHelper1: UserDatabaseHelper,databaseHelper2: MedicalDatabaseHelper)
 {
     Scaffold(
         topBar = { TopBar("DASHBOARD") },
-        content = {pad -> DashboardContent(pad,databaseHelper,email) },
+        content = {pad -> DashboardContent(pad,context,databaseHelper1,databaseHelper2,email) },
         bottomBar = { BottomBar(navController) }
     )
 }
 @Composable
-fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email:String?) {
+fun DashboardContent(h: PaddingValues, context: Context,databaseHelper1: UserDatabaseHelper, databaseHelper2: MedicalDatabaseHelper,email:String) {
     val sp5 = Modifier.padding(5.dp)
-    val user = databaseHelper.getUserByUseremail(email.toString())
-    if (user != null) {
-        Column(
-            modifier = Activityscreen,
-            horizontalAlignment = horzcenter,
-            verticalArrangement = vertspace
-        )
-        {
-            val bmi = user.bmi
+    val userreg = databaseHelper1.getUserByUseremail(email)
+    val usermed = databaseHelper2.medgetUserByUseremail(email)
+    Column(
+        modifier = Activityscreen,
+        horizontalAlignment = horzcenter,
+        verticalArrangement = vertspace
+    )
+    {
+        if (userreg != null && usermed != null) {
+            val bmi = usermed.bmi
             Image(
                 painter = painterResource(id = R.drawable.health_medicare_app),
                 contentDescription = "Logo",
-                modifier = Modifier.size(150.dp)
+                modifier = Modifier.size(135.dp).padding(top = 15.dp)
             )
             Row(
                 horizontalArrangement = horzstart,
@@ -84,8 +88,8 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = user.name.toString().uppercase(),
-                    fontSize = fnt24,
+                    text = userreg.name.toString().uppercase(),
+                    fontSize = fnt23,
                     fontWeight = txtbold
                 )
             }
@@ -102,8 +106,26 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = user.mobile.toString().uppercase(),
-                    fontSize = fnt24,
+                    text = userreg.mobile.toString().uppercase(),
+                    fontSize = fnt23,
+                    fontWeight = txtbold
+                )
+            }
+            Row(
+                horizontalArrangement = horzstart,
+                modifier = fillmaxwid
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.LocationOn,
+                    contentDescription = "Location",
+                    tint = purple673,
+                    modifier = iconsize
+                )
+                Spacer(modifier = sp5)
+                Text(
+                    text = usermed.location.toString().uppercase(),
+                    fontSize = fnt23,
                     fontWeight = txtbold
                 )
             }
@@ -119,13 +141,13 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                     modifier = iconsize
                 )
                 Spacer(modifier = sp5)
-                if (user.gender == "Male") {
+                if (usermed.gender == "Male") {
                     Image(
                         painter = painterResource(id = R.drawable.men),
                         contentDescription = "Men",
                         modifier = iconsize
                     )
-                } else if (user.gender == "Female") {
+                } else if (usermed.gender == "Female") {
                     Image(
                         painter = painterResource(id = R.drawable.women),
                         contentDescription = "Women",
@@ -148,7 +170,7 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = user.age.toString(), fontSize = fnt24,
+                    text = usermed.age.toString(), fontSize = fnt23,
                     fontWeight = txtbold
                 )
                 Spacer(modifier = sp5)
@@ -160,8 +182,8 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = user.bloodgrp.toString(),
-                    fontSize = fnt24,
+                    text = usermed.bloodgrp.toString(),
+                    fontSize = fnt23,
                     fontWeight = txtbold
                 )
             }
@@ -178,7 +200,7 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = bmi.toString(), fontSize = fnt24,
+                    text = bmi.toString(), fontSize = fnt23,
                     fontWeight = txtbold
                 )
                 Spacer(modifier = sp5)
@@ -187,35 +209,35 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                         Text(
                             text = "(UNDER-WEIGHT)",
                             color = Color(0xFF3F51B5),
-                            fontSize = fnt24,
+                            fontSize = fnt23,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 18.5..24.9) {
                         Text(
                             text = "(NORMAL)",
                             color = Color(0xFF028B7F),
-                            fontSize = fnt24,
+                            fontSize = fnt23,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 25.0..29.9) {
                         Text(
                             text = "(OVER-WEIGHT)",
                             color = Color(0xFFB8A81E),
-                            fontSize = fnt24,
+                            fontSize = fnt23,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 30.0..34.9) {
                         Text(
                             text = "(OBESE)",
                             color = Color(0xFFFF9800),
-                            fontSize = fnt24,
+                            fontSize = fnt23,
                             fontWeight = txtbold
                         )
                     } else {
                         Text(
                             text = "(EXTREMELY OBESE)",
                             color = Color.Red,
-                            fontSize = fnt24,
+                            fontSize = fnt23,
                             fontWeight = txtbold
                         )
                     }
@@ -234,10 +256,32 @@ fun DashboardContent(h: PaddingValues, databaseHelper: UserDatabaseHelper, email
                 )
                 Spacer(modifier = sp5)
                 Text(
-                    text = user.bloodpres.toString(), fontSize = fnt24,
+                    text = usermed.bloodpres.toString(), fontSize = fnt23,
                     fontWeight = txtbold
                 )
             }
+            Row(
+                horizontalArrangement = horzstart,
+                modifier = fillmaxwid.padding(bottom=35.dp)
+            )
+            {
+                Icon(
+                    imageVector = Icons.Outlined.MedicalServices,
+                    contentDescription = "Category",
+                    tint = purple673,
+                    modifier = iconsize
+                )
+                Spacer(modifier = sp5)
+                Text(
+                    text = usermed.category.toString().uppercase(), fontSize = fnt23,
+                    fontWeight = txtbold
+                )
+            }
+        } else {
+            Toast.makeText(
+                context, "Some Error",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
