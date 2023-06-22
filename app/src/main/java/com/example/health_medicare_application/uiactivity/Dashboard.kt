@@ -1,7 +1,5 @@
 package com.example.health_medicare_application.uiactivity
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,27 +36,33 @@ import com.example.health_medicare_application.model.UserDatabaseHelper
 import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.Black
 import com.example.health_medicare_application.ui.theme.fillmaxwid
+import com.example.health_medicare_application.ui.theme.fnt20
+import com.example.health_medicare_application.ui.theme.fnt21
 import com.example.health_medicare_application.ui.theme.fnt23
 import com.example.health_medicare_application.ui.theme.horzcenter
 import com.example.health_medicare_application.ui.theme.horzstart
 import com.example.health_medicare_application.ui.theme.iconsize
 import com.example.health_medicare_application.ui.theme.purple673
+import com.example.health_medicare_application.ui.theme.subtxtcol
 import com.example.health_medicare_application.ui.theme.txtbold
 import com.example.health_medicare_application.ui.theme.vertspace
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardPage(context: Context, navController: NavController, email:String,databaseHelper1: UserDatabaseHelper,databaseHelper2: MedicalDatabaseHelper)
+fun DashboardPage(navController: NavController, email: String, databaseHelper1: UserDatabaseHelper, databaseHelper2: MedicalDatabaseHelper
+)
 {
     Scaffold(
         topBar = { TopBar("DASHBOARD") },
-        content = {pad -> DashboardContent(pad,context,databaseHelper1,databaseHelper2,email) },
+        content = {pad -> DashboardContent(pad, databaseHelper1, databaseHelper2, email) },
         bottomBar = { BottomBar(navController) }
     )
 }
 @Composable
-fun DashboardContent(h: PaddingValues, context: Context,databaseHelper1: UserDatabaseHelper, databaseHelper2: MedicalDatabaseHelper,email:String) {
+fun DashboardContent(
+    h: PaddingValues, databaseHelper1: UserDatabaseHelper, databaseHelper2: MedicalDatabaseHelper, email: String
+) {
     val sp5 = Modifier.padding(5.dp)
     val userreg = databaseHelper1.getUserByUseremail(email)
     val usermed = databaseHelper2.medgetUserByUseremail(email)
@@ -209,35 +213,35 @@ fun DashboardContent(h: PaddingValues, context: Context,databaseHelper1: UserDat
                         Text(
                             text = "(UNDER-WEIGHT)",
                             color = Color(0xFF3F51B5),
-                            fontSize = fnt23,
+                            fontSize = fnt21,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 18.5..24.9) {
                         Text(
                             text = "(NORMAL)",
                             color = Color(0xFF028B7F),
-                            fontSize = fnt23,
+                            fontSize = fnt21,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 25.0..29.9) {
                         Text(
                             text = "(OVER-WEIGHT)",
                             color = Color(0xFFB8A81E),
-                            fontSize = fnt23,
+                            fontSize = fnt21,
                             fontWeight = txtbold
                         )
                     } else if (bmi.toFloat() in 30.0..34.9) {
                         Text(
                             text = "(OBESE)",
                             color = Color(0xFFFF9800),
-                            fontSize = fnt23,
+                            fontSize = fnt21,
                             fontWeight = txtbold
                         )
                     } else {
                         Text(
                             text = "(EXTREMELY OBESE)",
                             color = Color.Red,
-                            fontSize = fnt23,
+                            fontSize = fnt21,
                             fontWeight = txtbold
                         )
                     }
@@ -262,7 +266,7 @@ fun DashboardContent(h: PaddingValues, context: Context,databaseHelper1: UserDat
             }
             Row(
                 horizontalArrangement = horzstart,
-                modifier = fillmaxwid.padding(bottom=35.dp)
+                modifier = fillmaxwid.padding(bottom = 35.dp)
             )
             {
                 Icon(
@@ -278,10 +282,10 @@ fun DashboardContent(h: PaddingValues, context: Context,databaseHelper1: UserDat
                 )
             }
         } else {
-            Toast.makeText(
-                context, "Some Error",
-                Toast.LENGTH_SHORT
-            ).show()
+            Text(
+                text = "User Details not Found", fontSize = fnt20, color = subtxtcol,
+                fontWeight = txtbold
+            )
         }
     }
 }

@@ -50,6 +50,7 @@ import com.example.health_medicare_application.TopBar
 import com.example.health_medicare_application.ui.theme.fillmaxwid
 import com.example.health_medicare_application.ui.theme.fnt18
 import com.example.health_medicare_application.ui.theme.fnt19
+import com.example.health_medicare_application.ui.theme.fnt20
 import com.example.health_medicare_application.ui.theme.icon
 import com.example.health_medicare_application.ui.theme.mobkeypad
 import com.example.health_medicare_application.ui.theme.purewhite
@@ -105,15 +106,22 @@ fun Calorie(h: PaddingValues) {
     val butcolor = ButtonDefaults.buttonColors(purple673)
     val enable = remember { mutableStateOf(false) }
     Column(
-        modifier = fillmaxwid.fillMaxSize().padding(15.dp),
+        modifier = fillmaxwid.fillMaxSize().background(purewhite).padding(25.dp),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.SpaceEvenly
+        verticalArrangement = Arrangement.SpaceEvenly,
     )
     {
         if (!enable.value) {
+            Text(
+                text = "Manage your Calorie Intake",
+                fontSize = fnt20,
+                fontWeight = txtbold,
+                modifier = fillmaxwid.padding(top = 25.dp),
+                textAlign = txtcenter
+            )
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = fillmaxwid.padding(top = 30.dp)
+                modifier = fillmaxwid
             )
             {
                 TextField(
@@ -470,6 +478,7 @@ fun dropselector(icon: ImageVector, options:List<String>, plchold: String, wid: 
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isexpand) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(containerColor = purewhite),
+            leadingIcon = { Icon(icon, contentDescription = null) },
             modifier = wid.menuAnchor()
                 .border(BorderStroke(2.dp, purple673)),
             placeholder = { Text(text = plchold) },

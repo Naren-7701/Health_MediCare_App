@@ -80,7 +80,7 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
         Image(
             painter = painterResource(id = R.drawable.health_medicare_app),
             contentDescription = "Logo",
-            modifier = Modifier.size(175.dp).padding(top = 25.dp)
+            modifier = Modifier.size(160.dp).padding(top = 25.dp)
         )
         TextField(
             value = email.value,
@@ -90,7 +90,7 @@ fun ForgotPassword(h: PaddingValues, context: Context, navController: NavControl
             singleLine = true,
             colors = txtfieldcol,
             label = { Text("Enter Email ID") },
-            modifier = fillmaxwid.padding(top = 50.dp)
+            modifier = fillmaxwid
                 .border(BorderStroke(2.dp, purple673)),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) }

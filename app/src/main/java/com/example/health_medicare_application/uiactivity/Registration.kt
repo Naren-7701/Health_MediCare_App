@@ -85,7 +85,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
         Image(
             painter = painterResource(id = R.drawable.health_medicare_app),
             contentDescription = "Logo",
-            modifier = Modifier.size(145.dp).padding(top=25.dp)
+            modifier = Modifier.size(160.dp).padding(top=25.dp)
         )
         TextField(
             value = email.value,
@@ -95,7 +95,7 @@ fun RegisterFill(h: PaddingValues,context: Context,navController: NavController,
             singleLine = true,
             colors = txtfieldcol,
             label = { Text("Enter Email ID") },
-            modifier = fillmaxwid.padding(top = 50.dp).border(BorderStroke(2.dp, purple673)),
+            modifier = fillmaxwid.border(BorderStroke(2.dp, purple673)),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) }
         )

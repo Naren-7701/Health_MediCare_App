@@ -76,7 +76,7 @@ fun LoginFill(h: PaddingValues,context: Context, navController: NavController,da
         Image(
             painter = painterResource(id = R.drawable.health_medicare_app),
             contentDescription = "Logo",
-            modifier = Modifier.size(150.dp).padding(top=25.dp)
+            modifier = Modifier.size(160.dp).padding(top=25.dp)
         )
         TextField(
             value = mail.value,

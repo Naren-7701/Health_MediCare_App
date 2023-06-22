@@ -3,14 +3,12 @@ package com.example.health_medicare_application.uiactivity
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
@@ -34,23 +32,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.health_medicare_application.R
 import com.example.health_medicare_application.TopBar
 import com.example.health_medicare_application.model.MedicalDatabaseHelper
 import com.example.health_medicare_application.model.MedicalDb
 import com.example.health_medicare_application.ui.theme.Activityscreen
 import com.example.health_medicare_application.ui.theme.fillmaxwid
+import com.example.health_medicare_application.ui.theme.fnt18
 import com.example.health_medicare_application.ui.theme.horzcenter
 import com.example.health_medicare_application.ui.theme.mobkeypad
 import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.rcshape
 import com.example.health_medicare_application.ui.theme.reglogbut
 import com.example.health_medicare_application.ui.theme.reglogbuttxtcol
+import com.example.health_medicare_application.ui.theme.subtxtcol
+import com.example.health_medicare_application.ui.theme.txtbold
 import com.example.health_medicare_application.ui.theme.txtcenter
 import com.example.health_medicare_application.ui.theme.vertspace
 
@@ -87,10 +86,9 @@ fun MedicalRegFill(h: PaddingValues, context: Context, navController: NavControl
         val systol = remember { mutableStateOf(TextFieldValue("")) }
         val diastol = remember { mutableStateOf(TextFieldValue("")) }
         val txtfieldcol = TextFieldDefaults.textFieldColors(containerColor = Color.White)
-        Image(
-            painter = painterResource(id = R.drawable.health_medicare_app),
-            contentDescription = "Logo",
-            modifier = Modifier.size(145.dp).padding(top = 25.dp)
+        Text(
+            text = "We want to know more about You", fontSize = fnt18, color = subtxtcol,
+            fontWeight = txtbold, modifier = Modifier.padding(top=30.dp)
         )
         TextField(
             value = email.value,

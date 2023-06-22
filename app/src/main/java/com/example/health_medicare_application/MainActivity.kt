@@ -47,13 +47,11 @@ import com.example.health_medicare_application.ui.theme.purple673
 import com.example.health_medicare_application.ui.theme.txtbold
 import com.example.health_medicare_application.uiactivity.CaloriePage
 import com.example.health_medicare_application.uiactivity.DashboardPage
-import com.example.health_medicare_application.uiactivity.Doctor
 import com.example.health_medicare_application.uiactivity.EmergencyContactPage
 import com.example.health_medicare_application.uiactivity.ForgotPasswordPage
 import com.example.health_medicare_application.uiactivity.HealthArticlePage
 import com.example.health_medicare_application.uiactivity.LoginPage
 import com.example.health_medicare_application.uiactivity.MedicalRegPage
-import com.example.health_medicare_application.uiactivity.Medicine
 import com.example.health_medicare_application.uiactivity.RegistrationPage
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -113,7 +111,7 @@ fun App(context:Context,databaseReference: DatabaseReference,databaseHelper1: Us
         composable("dashboard/{email}") {
                 backStackEntry ->
             val email = backStackEntry.arguments?.getString("email")
-            DashboardPage(context,navController,email.toString(),databaseHelper1,databaseHelper2)
+            DashboardPage(navController, email.toString(), databaseHelper1, databaseHelper2)
         }
         composable("caloriemgt") {
             CaloriePage(navController)
