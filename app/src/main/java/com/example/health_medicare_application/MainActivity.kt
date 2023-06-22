@@ -107,8 +107,11 @@ fun App(context:Context,databaseReference: DatabaseReference,databaseHelper1: Us
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = "login"
+        startDestination = "splashscreen"
     ) {
+        composable("splashscreen") {
+            SplashScreen(navController)
+        }
         composable("reg") {
             RegistrationPage(context, navController, databaseReference, databaseHelper1)
         }
