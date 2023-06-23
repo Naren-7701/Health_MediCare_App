@@ -12,16 +12,11 @@ import com.google.firebase.messaging.RemoteMessage
 const val channelId = "notif_channel"
 const val channelName="com.example.health_medicare_application"
 class FCMService : FirebaseMessagingService() {
-    val tag = "FCMTOKEN"
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.getNotification() != null) {
             generateNotification(
                 remoteMessage.notification?.title.toString(),
                 remoteMessage.notification?.body.toString()
-            )
-            Log.d(
-                tag, remoteMessage.notification?.title.toString() +
-                        remoteMessage.notification?.body.toString()
             )
         }
     }
