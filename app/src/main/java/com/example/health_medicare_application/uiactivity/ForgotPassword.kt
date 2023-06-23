@@ -1,8 +1,11 @@
 package com.example.health_medicare_application.uiactivity
 
+import android.Manifest
 import android.content.Context
 import android.telephony.SmsManager
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -26,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -54,11 +58,24 @@ import com.google.firebase.database.DatabaseReference
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ForgotPasswordPage(context: Context, navController: NavController,databaseReference: DatabaseReference,databaseHelper: UserDatabaseHelper)
-{
+fun ForgotPasswordPage(context: Context, navController: NavController,databaseReference: DatabaseReference,databaseHelper: UserDatabaseHelper) {
+    val get_permission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            // Permission accepted Do Something
+        } else {
+            // Permission not accepted show message
+        }
+    }
+    SideEffect {
+        get_permission.launch(Manifest.permission.SEND_SMS)
+    }
     Scaffold(
         topBar = { TopBar("FORGOT PASSWORD") },
-        content = {pad -> ForgotPassword(pad,context,navController,databaseReference,databaseHelper) },
+        content = { pad ->
+            ForgotPassword(pad, context, navController, databaseReference, databaseHelper)
+        },
     )
 }
 @OptIn(ExperimentalMaterial3Api::class)

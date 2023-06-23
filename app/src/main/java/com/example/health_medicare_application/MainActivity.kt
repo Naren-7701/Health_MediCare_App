@@ -1,13 +1,15 @@
 package com.example.health_medicare_application
 
-import android.Manifest
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -73,6 +75,8 @@ import com.google.firebase.database.FirebaseDatabase
 class MainActivity : ComponentActivity() {
     private lateinit var databaseHelper1: UserDatabaseHelper
     private lateinit var databaseHelper2: MedicalDatabaseHelper
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         databaseHelper1 = UserDatabaseHelper(this)
@@ -95,7 +99,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                     SideEffect {
-                        get_permission.launch(Manifest.permission.SEND_SMS)
+                        get_permission.launch(POST_NOTIFICATIONS)
                     }
                     App(applicationContext,reference,databaseHelper1,databaseHelper2)
                 }
